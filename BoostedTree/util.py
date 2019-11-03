@@ -16,6 +16,10 @@ def get_timestamp(date):
         return datetime.datetime.strptime(date + "01", "%Y%m%d").timestamp()
 
 
+def f1_score(prec, rec):
+    return (2 * prec * rec)/(prec + rec)
+
+
 def load_prep_data(file_name):
 
 
