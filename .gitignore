@@ -6,3 +6,4 @@
 *.pbtxt
 checkpoint
 eval
+*.pyc
