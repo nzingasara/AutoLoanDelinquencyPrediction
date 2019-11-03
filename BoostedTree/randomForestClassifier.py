@@ -21,6 +21,10 @@ def make_input_func(X, y, n_epochs, batch_size):
     return input_func
 
 
+def make_boosted_tree_classifier(feature_columns):
+    return tf.estimator.BoostedTreesClassifier(feature_columns, n_batches_per_layer=1, model_dir='.')
+
+
 # todo: put mortgage_data back
 # file_name = "mortgage_data.csv"
 file_name = "mortgagePractice.csv"
@@ -34,7 +38,7 @@ test_in = make_input_func(df_test_X, df_test_y, 1, len(df_train_y))
 # at this point, all initial data loading and processing is done
 
 # create the estimator
-est = tf.estimator.BoostedTreesClassifier(feature_cols, n_batches_per_layer=1, model_dir='.')
+est = make_boosted_tree_classifier(feature_cols)
 
 # training
 est.train(train_in, max_steps=None)
