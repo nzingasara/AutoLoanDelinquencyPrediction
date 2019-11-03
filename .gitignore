@@ -1,1 +1,8 @@
 *.csv
+*.meta
+*0001
+*.index
+*.edu
+*.pbtxt
+*.checkpoint
+eval
