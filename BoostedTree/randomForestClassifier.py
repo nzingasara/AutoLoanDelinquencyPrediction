@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 import datetime
 import math
+from sklearn.metrics import roc_curve
 
 # todo: add header to data
 # todo: make sure file name is still same after Thomas finishes rerun
@@ -130,3 +131,14 @@ for elem in preds:
     print("another prob:")
     print(elem)
     print(elem["probabilities"])
+
+
+# plot into roc curve
+false_pos_rates, true_pos_rates, thresholds = roc_curve(df_test_y, probabilities)
+plt.plot(false_pos_rates, true_pos_rates)
+plt.title("ROC Curve")
+plt.xlabel("False positive rate")
+plt.ylabel("True positive rate")
+plt.xlim(0,)
+plt.ylim(0,)
+plt.show()
