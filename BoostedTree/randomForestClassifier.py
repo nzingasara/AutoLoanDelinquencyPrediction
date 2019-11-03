@@ -22,7 +22,7 @@ def make_input_func(X, y, n_epochs, batch_size):
 
 
 def make_boosted_tree_classifier(feature_columns):
-    return tf.estimator.BoostedTreesClassifier(feature_columns, n_batches_per_layer=1, model_dir='.')
+    return tf.estimator.BoostedTreesClassifier(feature_columns, n_batches_per_layer=1, model_dir='./btc_model/')
 
 
 # todo: put mortgage_data back
@@ -73,4 +73,7 @@ plt.xlabel("False positive rate")
 plt.ylabel("True positive rate")
 plt.xlim(0,)
 plt.ylim(0,)
-plt.show()
+#plt.show()
+
+est.export_saved_model('btc_model')
+tf.saved_model.save(est, "tmp/btc/1/")

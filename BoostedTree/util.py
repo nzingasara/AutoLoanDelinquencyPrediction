@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 import datetime
 import math
+import matplotlib.pyplot as plt
 
 def one_hot_enc(feature_name, unique_vals):
     return tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list(feature_name, unique_vals))
@@ -18,6 +19,22 @@ def get_timestamp(date):
 
 def f1_score(prec, rec):
     return (2 * prec * rec)/(prec + rec)
+
+
+def plot(x, y):
+    plt.plot(x, y)
+
+
+def initialize_plot(title, xlabel, ylabel):
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+
+
+def save_clear_plt(png_file_name):
+    #plt.tight_layout()
+    plt.savefig(png_file_name)
+    plt.clf()
 
 
 def load_prep_data(file_name):
