@@ -135,15 +135,6 @@ for tree_depth in max_tree_depth_list:
     # done with plotting lines for all learning rates for this tree depth. Save the plot and clear plt
     util.save_clear_plt("rbfPerfWith_%ld_MaxDepth.png" % tree_depth, ax, fig)
 ############################
-# plot into roc curve
-#false_pos_rates, true_pos_rates, thresholds = roc_curve(df_test_y, probabilities)
-#plt.plot(false_pos_rates, true_pos_rates)
-#plt.title("ROC Curve")
-#plt.xlabel("False positive rate")
-#plt.ylabel("True positive rate")
-#plt.xlim(0,)
-#plt.ylim(0,)
-#plt.show()
 
 # todo: fix save model code. These don't work
 #est.export_saved_model('btc_model')
