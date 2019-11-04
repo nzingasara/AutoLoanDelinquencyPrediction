@@ -16,7 +16,7 @@ To change the hyperparameters used, go into randomForestClassifier.py and update
 
 ### Jupyter Notebook Random Forest Classifier information
 
-### How to run randomForestClassifier.ipynb
+#### How to run randomForestClassifier.ipynb
 1. Make sure you have a google account
 2. log into your google account
 3. open Google Drive
@@ -34,6 +34,6 @@ To change the hyperparameters used, go into randomForestClassifier.py and update
 
 Note: When the instructions say "run the script", please run the first section that has only two lines of code first, then the next section that has the main code.
 
-### Further info on randomForestClassifier.ipynb
+#### Further info on randomForestClassifier.ipynb
 The png file plots will be generated in "drive/My Drive/Colab Notebooks/CSE6242Project/". You may need to create the CSE6242Project folder before running this.
 To change the hyperparameters used, go into randomForestClassifier.ipynb and update the lists under the comment that says "global variables"
