@@ -66,7 +66,7 @@ f1_scores_list = []
 
 ############################
 for tree_depth in max_tree_depth_list:
-    util.initialize_plot("Random Boosted Forrest Performance with %ld Max Depth" % tree_depth, "n_trees", "F1 Score")
+    fig, ax = util.initialize_plot("Random Boosted Forrest Performance with %ld Max Depth" % tree_depth, "n_trees", "F1 Score")
     for lr in learn_rate_list:
         # clear f1 scores list
         f1_scores_list = []
@@ -120,16 +120,20 @@ for tree_depth in max_tree_depth_list:
             #print(output.update_state(df_test_y, predicted_labels))
 
             # confusion matrix
-            #util.make_confusion_matrix(classes, df_test_y, predicted_labels,
-                                  #"Delinquency Confusion Matrix (lr=%f, num trees=%ld, max depth=%ld)" % (lr, n_tree, tree_depth),
-                                  #"Confusion Matrix_lr=%f_numTrees=%ld_maxDepth=%ld.png" % (lr, n_tree, tree_depth))
+            util.make_confusion_matrix(classes, df_test_y, predicted_labels,
+                                  "Delinquency Confusion Matrix (lr=%f, num trees=%ld, max depth=%ld)" % (lr, n_tree, tree_depth),
+                                  "Confusion Matrix_lr=%f_numTrees=%ld_maxDepth=%ld.png" % (lr, n_tree, tree_depth))
+
+            # ROC curve
+            util.plot_roc_curve(df_test_y,probabilities, "ROC Curve (lr=%f, num trees=%ld, max depth=%ld)" % (lr, n_tree, tree_depth),
+                                "ROCCurve_lr=%f_numTrees=%ld_maxDepth=%ld.png" % (lr, n_tree, tree_depth))
 
 
         # done with n_trees loop for this learning rate. Plot the values
-        util.plot(n_trees_list, f1_scores_list, "learning rate = %f" % lr)
+        util.plot(n_trees_list, f1_scores_list, "learning rate = %f" % lr, ax)
 
     # done with plotting lines for all learning rates for this tree depth. Save the plot and clear plt
-    util.save_clear_plt("rbfPerfWith_%ld_MaxDepth.png" % tree_depth)
+    util.save_clear_plt("rbfPerfWith_%ld_MaxDepth.png" % tree_depth, ax, fig)
 ############################
 # plot into roc curve
 #false_pos_rates, true_pos_rates, thresholds = roc_curve(df_test_y, probabilities)

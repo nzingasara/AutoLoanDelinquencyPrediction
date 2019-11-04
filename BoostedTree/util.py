@@ -22,21 +22,23 @@ def f1_score(prec, rec):
     return (2 * prec * rec)/(prec + rec)
 
 
-def plot(x, y, label):
-    plt.plot(x, y, label=label)
+def plot(x, y, label, ax):
+    ax.plot(x, y, label=label)
 
 
 def initialize_plot(title, xlabel, ylabel):
-    plt.title(title)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
+    fig, ax = plt.subplots()
+    ax.set_title(title)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    return fig, ax
 
 
-def save_clear_plt(png_file_name):
+def save_clear_plt(png_file_name, ax, fig):
     #plt.tight_layout()
-    plt.legend(loc="best")
-    plt.savefig(png_file_name)
-    plt.clf()
+    ax.legend(loc="best")
+    fig.savefig(png_file_name)
+    fig.clf()
 
 
 def make_confusion_matrix(classes, true_labels, predictions, title, file_name):
