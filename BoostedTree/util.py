@@ -21,8 +21,8 @@ def f1_score(prec, rec):
     return (2 * prec * rec)/(prec + rec)
 
 
-def plot(x, y):
-    plt.plot(x, y)
+def plot(x, y, label):
+    plt.plot(x, y, label=label)
 
 
 def initialize_plot(title, xlabel, ylabel):
@@ -33,6 +33,7 @@ def initialize_plot(title, xlabel, ylabel):
 
 def save_clear_plt(png_file_name):
     #plt.tight_layout()
+    plt.legend(loc="best")
     plt.savefig(png_file_name)
     plt.clf()
 
@@ -42,9 +43,9 @@ def load_prep_data(file_name):
 
     type_dict = {'loan_amnt': np.float64,
                  'state': 'str',
-                 # 'annual_inc': np.int,
+                 'annual_inc': np.float64,
                  'int_rate': np.float64,
-                 'delinquent': np.int,
+                 'delinquent': np.float64,
                  'disbursal_date': 'str',
                  'credit_score': np.float64
                  }
@@ -52,6 +53,9 @@ def load_prep_data(file_name):
     df = pd.read_csv(file_name, header=0, delimiter=",", dtype=type_dict)
     print("df:")
     print(df.head(n=5))
+
+    print("df.dtypes:")
+    print(df.dtypes)
 
     # drop records that contain NaN
     df.dropna(inplace=True)
@@ -75,7 +79,7 @@ def load_prep_data(file_name):
 
     # separate into train and test
     num_rows = df.shape[0]
-    train_num_rows = math.floor(num_rows * 0.5)
+    train_num_rows = math.floor(num_rows * 0.8)
     df_train_X = df.iloc[:train_num_rows, :]
     df_test_X = df.iloc[train_num_rows:, :]
 
