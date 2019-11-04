@@ -33,6 +33,9 @@ def make_boosted_tree_classifier(feature_columns, max_depth, n_trees, learning_r
 
 
 def get_preds(est, input_fn):
+    print("est.predict(input_fn=input_fn):")
+    for i, elem in enumerate(est.predict(input_fn=input_fn)):
+        print(elem)
     return [elem["class_ids"][0] for elem in est.predict(input_fn=input_fn)]
 
 
@@ -43,7 +46,7 @@ file_name = "mortgagePractice.csv"
 df_train_X, df_train_y, df_test_X, df_test_y, feature_cols = util.load_prep_data(file_name)
 
 # train and test input functions
-train_in = make_input_func(df_train_X, df_train_y, None, len(df_train_y))
+train_in = make_input_func(df_train_X, df_train_y, 1, len(df_train_y))
 test_in = make_input_func(df_test_X, df_test_y, 1, len(df_train_y))
 
 #########
@@ -63,6 +66,7 @@ print(df_test_y.value_counts(dropna=False))
 
 # arrays for storing info for plotting
 f1_scores_list = []
+f1_train_list = []
 
 ############################
 for tree_depth in max_tree_depth_list:
@@ -70,6 +74,7 @@ for tree_depth in max_tree_depth_list:
     for lr in learn_rate_list:
         # clear f1 scores list
         f1_scores_list = []
+        f1_train_list = []
         print("f1 scores after clearing:")
         print(f1_scores_list)
         for n_tree in n_trees_list:
@@ -107,12 +112,15 @@ for tree_depth in max_tree_depth_list:
             predicted_labels = get_preds(est, test_in)
             print(predicted_labels)
 
+            print("Train Predicted labels:")
+            print(get_preds(est, train_in))
+
             # get the F1 score and store in array
             curr_prec = results['precision']
             curr_rec = results['recall']
             print("curr_prec: %s" % curr_prec)
             print("curr_rec: %s" % curr_rec)
-            #f1_scores_list.append(util.f1_score_implemented(float(curr_prec), float(curr_rec)))
+            f1_train_list.append(util.f1_score_sklearn(df_train_y.tolist(), get_preds(est, train_in)))
             f1_scores_list.append(util.f1_score_sklearn(df_test_y.tolist(), predicted_labels))
             print("f1 scores thus far:")
             print(f1_scores_list)
@@ -131,7 +139,8 @@ for tree_depth in max_tree_depth_list:
 
 
         # done with n_trees loop for this learning rate. Plot the values
-        util.plot(n_trees_list, f1_scores_list, "learning rate = %f" % lr, ax)
+        util.plot(n_trees_list, f1_train_list, "train learning rate = %f" % lr, ax)
+        util.plot(n_trees_list, f1_scores_list, "test learning rate = %f" % lr, ax)
 
     # done with plotting lines for all learning rates for this tree depth. Save the plot and clear plt
     util.save_clear_plt("rbfPerfWith_%ld_MaxDepth.png" % tree_depth, ax, fig)
