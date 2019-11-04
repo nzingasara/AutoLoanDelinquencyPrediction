@@ -6,6 +6,7 @@ import datetime
 import math
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve
+from sklearn.metrics import f1_score
 
 def one_hot_enc(feature_name, unique_vals):
     return tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list(feature_name, unique_vals))
@@ -18,8 +19,12 @@ def get_timestamp(date):
         return datetime.datetime.strptime(date + "01", "%Y%m%d").timestamp()
 
 
-def f1_score(prec, rec):
+def f1_score_implemented(prec, rec):
     return (2 * prec * rec)/(prec + rec)
+
+
+def f1_score_sklearn(truth, pred):
+    return f1_score(truth, pred)
 
 
 def plot(x, y, label, ax):

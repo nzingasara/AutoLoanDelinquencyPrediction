@@ -112,7 +112,8 @@ for tree_depth in max_tree_depth_list:
             curr_rec = results['recall']
             print("curr_prec: %s" % curr_prec)
             print("curr_rec: %s" % curr_rec)
-            f1_scores_list.append(util.f1_score(float(curr_prec), float(curr_rec)))
+            #f1_scores_list.append(util.f1_score_implemented(float(curr_prec), float(curr_rec)))
+            f1_scores_list.append(util.f1_score_sklearn(df_test_y.tolist(), predicted_labels))
             print("f1 scores thus far:")
             print(f1_scores_list)
             #output = tfa.metrics.f_scores.F1Score(num_classes=2)
