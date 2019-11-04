@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 import datetime
 import math
-from sklearn.metrics import roc_curve
 import util
 
 # todo: add header to data
@@ -14,6 +13,8 @@ import util
 max_tree_depth_list = [2,3,4,5,6]
 n_trees_list = [100, 150, 200, 400, 800, 1600]
 learn_rate_list = [0.1, 0.3, 0.5]
+
+classes = ["Not Delinquent", "Delinquent"]
 
 
 # input function for training
@@ -117,6 +118,11 @@ for tree_depth in max_tree_depth_list:
             #output = tfa.metrics.f_scores.F1Score(num_classes=2)
             #print("F1 metric tf:")
             #print(output.update_state(df_test_y, predicted_labels))
+
+            # confusion matrix
+            #util.make_confusion_matrix(classes, df_test_y, predicted_labels,
+                                  #"Delinquency Confusion Matrix (lr=%f, num trees=%ld, max depth=%ld)" % (lr, n_tree, tree_depth),
+                                  #"Confusion Matrix_lr=%f_numTrees=%ld_maxDepth=%ld.png" % (lr, n_tree, tree_depth))
 
 
         # done with n_trees loop for this learning rate. Plot the values

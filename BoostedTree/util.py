@@ -5,6 +5,7 @@ import tensorflow as tf
 import datetime
 import math
 import matplotlib.pyplot as plt
+from sklearn.metrics import roc_curve
 
 def one_hot_enc(feature_name, unique_vals):
     return tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list(feature_name, unique_vals))
@@ -36,6 +37,36 @@ def save_clear_plt(png_file_name):
     plt.legend(loc="best")
     plt.savefig(png_file_name)
     plt.clf()
+
+
+def make_confusion_matrix(classes, true_labels, predictions, title, file_name):
+    conf_mx = tf.math.confusion_matrix(true_labels, predictions)
+    fig, ax = plt.subplots()
+    im = ax.imshow(conf_mx)
+
+    ticks = []
+    for i, elem in enumerate(classes):
+        ticks.append(i)
+
+    ax.set_xticks(ticks)
+    ax.set_yticks(ticks)
+
+    ax.set_title(title)
+    fig.tight_layout()
+    fig.savefig(file_name)
+    fig.clf()
+
+
+def plot_roc_curve(actuals, probabilities, title, file_name):
+    false_pos_rates, true_pos_rates, thresholds = roc_curve(actuals, probabilities)
+    fig, ax = plt.subplots()
+    ax.plot(false_pos_rates, true_pos_rates)
+    ax.set_title(title)
+    ax.set_xlabel("False positive rate")
+    ax.set_ylabel("True positive rate")
+    #ax.xlim(0,)
+    #ax.ylim(0,)
+    fig.savefig(file_name)
 
 
 def load_prep_data(file_name):
