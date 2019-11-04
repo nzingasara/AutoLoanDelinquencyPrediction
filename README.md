@@ -8,7 +8,9 @@ There are two files called "randomForestClassifer", one with extension .py and a
 #### How to run randomForestClassifier.py
 1. Make sure you have the latest randomForestClassifier.py
 2. cd to the directory with randomForestClassifier.py in it
-3. run the following command on the command line: python3 randomForestClassifier.py
+3. make sure the util.py and csv file you want to process are in the same directory
+4. Make sure file_name string in the .py file is set to the name of the csv file you want to process
+5. run the following command on the command line: python3 randomForestClassifier.py
 
 #### Further info on randomForestClassifier.py
 The plots, including ROC, confusion matrices, and f1 score graphs, will be generated as png files in the directory you are running the python file from.
@@ -26,11 +28,12 @@ To change the hyperparameters used, go into randomForestClassifier.py and update
 7. Click on the ">" tab under the "+Code" button at the top left
 8. Click on "Upload"
 9. Upload the data file to be processed and util.py
-10. Run the script
-11. It will install TensorFlow GPU 2.0.0. It will say in red that to use this new version you must restart the runtime with a button that says restart on it. Press the button and wait for the runtime to be reinitialized
-12. Run the script again.
-13. It will ask you to go to a url to put in the authorization code. Go to that url, choose your gmail account, press "Allow", and copy the url shown on screen.
-14. paste the url in the place it asks to and press Enter key. The script should run now
+10. Make sure file_name string is set to the name of the file you want to process in the ipynb file.
+11. Run the script
+12. It will install TensorFlow GPU 2.0.0. It will say in red that to use this new version you must restart the runtime with a button that says restart on it. Press the button and wait for the runtime to be reinitialized
+13. Run the script again.
+14. It will ask you to go to a url to put in the authorization code. Go to that url, choose your gmail account, press "Allow", and copy the url shown on screen.
+15. paste the url in the place it asks to and press Enter key. The script should run now
 
 Note: When the instructions say "run the script", please run the first section that has only two lines of code first, then the next section that has the main code.
 
