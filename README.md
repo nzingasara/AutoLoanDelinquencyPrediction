@@ -25,15 +25,17 @@ To change the hyperparameters used, go into randomForestClassifier.py and update
 4. Set up a jupyter Notebook (See Google_GPU.pdf under the "Other" folder in our shared Google Drive for this project)
 5. Put the randomForestClassifier.ipynb file somewhere in your Google Colab folder wherever you want to run it
 6. Open the ipynb file in Google Colab
-7. Click on the ">" tab under the "+Code" button at the top left
-8. Click on "Upload"
-9. Upload the data file to be processed and util.py
-10. Make sure file_name string is set to the name of the file you want to process in the ipynb file.
-11. Run the script
-12. It will install TensorFlow GPU 2.0.0. It will say in red that to use this new version you must restart the runtime with a button that says restart on it. Press the button and wait for the runtime to be reinitialized
-13. Run the script again.
-14. It will ask you to go to a url to put in the authorization code. Go to that url, choose your gmail account, press "Allow", and copy the url shown on screen.
-15. paste the url in the place it asks to and press Enter key. The script should run now
+7. Go to Runtime -> Change Runtime Type and Choose GPU and click save
+8. after it reinitializes with GPU, you can confirm it's using GPU by hovering over the image that says RAM DISK to make sure it says "GPU" in parentheses.
+9. Click on the ">" tab under the "+Code" button at the top left
+10. Click on "Upload"
+11. Upload the data file to be processed and util.py
+12. Make sure file_name string is set to the name of the file you want to process in the ipynb file.
+13. Run the script
+14. It will install TensorFlow GPU 2.0.0. It will say in red that to use this new version you must restart the runtime with a button that says restart on it. Press the button and wait for the runtime to be reinitialized
+15. Run the script again.
+16. It will ask you to go to a url to put in the authorization code. Go to that url, choose your gmail account, press "Allow", and copy the url shown on screen.
+17. paste the url in the place it asks to and press Enter key. The script should run now
 
 Note: When the instructions say "run the script", please run the first section that has only two lines of code first, then the next section that has the main code.
 

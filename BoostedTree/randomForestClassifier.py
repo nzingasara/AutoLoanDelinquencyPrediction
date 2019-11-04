@@ -37,8 +37,8 @@ def get_preds(est, input_fn):
 
 
 # todo: put mortgage_data back
-#file_name = "mortgage_data.csv"
-file_name = "mortgagePractice.csv"
+file_name = "mortgage_data.csv"
+#file_name = "mortgagePractice.csv"
 
 df_train_X, df_train_y, df_test_X, df_test_y, feature_cols = util.load_prep_data(file_name)
 
@@ -67,6 +67,7 @@ f1_train_list = []
 
 ############################
 for tree_depth in max_tree_depth_list:
+    print("processing tree depth %ld" % tree_depth)
     fig, ax = util.initialize_plot("Random Boosted Forrest Performance with %ld Max Depth" % tree_depth, "n_trees", "F1 Score")
     for lr in learn_rate_list:
         # clear f1 scores list
