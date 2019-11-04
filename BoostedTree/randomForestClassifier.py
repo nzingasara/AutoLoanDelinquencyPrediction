@@ -33,9 +33,6 @@ def make_boosted_tree_classifier(feature_columns, max_depth, n_trees, learning_r
 
 
 def get_preds(est, input_fn):
-    print("est.predict(input_fn=input_fn):")
-    for i, elem in enumerate(est.predict(input_fn=input_fn)):
-        print(elem)
     return [elem["class_ids"][0] for elem in est.predict(input_fn=input_fn)]
 
 
@@ -50,16 +47,16 @@ train_in = make_input_func(df_train_X, df_train_y, 1, len(df_train_y))
 test_in = make_input_func(df_test_X, df_test_y, 1, len(df_train_y))
 
 #########
-print("train # rows: %ld" % df_train_y.shape[0])
-print("df_train_y head (5):")
-print(df_train_y.head(n=5))
-print("train label counts:")
-print(df_train_y.value_counts(dropna=False))
-print("test # rows: %ld" % df_test_y.shape[0])
-print("df_test_y head (5):")
-print(df_test_y.head(n=5))
-print("test label counts:")
-print(df_test_y.value_counts(dropna=False))
+#print("train # rows: %ld" % df_train_y.shape[0])
+#print("df_train_y head (5):")
+#print(df_train_y.head(n=5))
+#print("train label counts:")
+#print(df_train_y.value_counts(dropna=False))
+#print("test # rows: %ld" % df_test_y.shape[0])
+#print("df_test_y head (5):")
+#print(df_test_y.head(n=5))
+#print("test label counts:")
+#print(df_test_y.value_counts(dropna=False))
 #########
 
 # at this point, all initial data loading and processing is done
@@ -75,8 +72,6 @@ for tree_depth in max_tree_depth_list:
         # clear f1 scores list
         f1_scores_list = []
         f1_train_list = []
-        print("f1 scores after clearing:")
-        print(f1_scores_list)
         for n_tree in n_trees_list:
             # create the estimator
             est = make_boosted_tree_classifier(feature_cols, tree_depth, n_tree, lr)
@@ -87,43 +82,21 @@ for tree_depth in max_tree_depth_list:
             # evaluation
             results = est.evaluate(test_in)
             #clear_output()
-            print("results:")
-            print(pd.Series(results))
 
             # predictions
             predictions = list(est.predict(test_in))
-            print("predictions:")
-            print(predictions)
             probabilities = pd.Series([pred['probabilities'][1] for pred in predictions])
 
-            print("probabilities:")
-            print(probabilities)
-
             preds = est.predict(test_in)
-            for elem in preds:
-                print("another prob:")
-                print(elem)
-                print(elem["probabilities"])
 
             # true labels
-            print("True labels:")
-            print(df_test_y)
-            print("Predicted labels:")
             predicted_labels = get_preds(est, test_in)
-            print(predicted_labels)
-
-            print("Train Predicted labels:")
-            print(get_preds(est, train_in))
 
             # get the F1 score and store in array
             curr_prec = results['precision']
             curr_rec = results['recall']
-            print("curr_prec: %s" % curr_prec)
-            print("curr_rec: %s" % curr_rec)
             f1_train_list.append(util.f1_score_sklearn(df_train_y.tolist(), get_preds(est, train_in)))
             f1_scores_list.append(util.f1_score_sklearn(df_test_y.tolist(), predicted_labels))
-            print("f1 scores thus far:")
-            print(f1_scores_list)
             #output = tfa.metrics.f_scores.F1Score(num_classes=2)
             #print("F1 metric tf:")
             #print(output.update_state(df_test_y, predicted_labels))

@@ -89,31 +89,19 @@ def load_prep_data(file_name):
                  }
 
     df = pd.read_csv(file_name, header=0, delimiter=",", dtype=type_dict)
-    print("df:")
-    print(df.head(n=5))
-
-    print("df.dtypes:")
-    print(df.dtypes)
 
     # drop records that contain NaN
     df.dropna(inplace=True)
-    print("df after dropna:")
-    print(df.head(n=5))
 
     # get the training and testing out of the data
     df = df.sample(frac=1, replace=False)
 
     # create new column representing converted dates into timestamps
     new_col = df["disbursal_date"].apply(get_timestamp)
-    print("new_col info:")
-    print(new_col)
     df.insert(df.shape[1], "disbursal_timestamp", new_col, False)
 
     # remove old disbursal_date column
     df.pop('disbursal_date')
-
-    print("df after removing disbursal date:")
-    print(df.head(n=5))
 
     # separate into train and test
     num_rows = df.shape[0]
