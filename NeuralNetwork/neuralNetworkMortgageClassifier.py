@@ -50,7 +50,7 @@ cols_to_hash = ['state']
 no_new_cols_per = 6
 
 # load the data
-file_name = "mortgage_data.csv"
+file_name = "mortgage_data_small.csv"
 df, unique_labels = util.load_data(file_name)
 
 print("df after loading (%ld rows):" % df.shape[0])
@@ -60,11 +60,6 @@ print(df.head(n=5))
 df = util.hash_encoder(df, cols_to_hash, no_new_cols_per)
 print("df after hashing (%ld rows):" % df.shape[0])
 print(df.head(n=5))
-
-sclr = fit_scaler(df)
-df = scale_data(sclr, df)
-print("df_data AFTER scaling:")
-print(df_data)
 
 # separate into train/test X/y splits
 df_train_X, df_train_y, df_test_X, df_test_y = util.get_train_test_split(df)
@@ -105,6 +100,14 @@ test_y = util.one_hot_encode(df_test_y, 2)
 print("train_y one hot:")
 print(train_y[:10])
 
+sclr = util.fit_scaler(df_train_X)
+train_X = util.scale_data(sclr, df_train_X)
+test_X = util.scale_data(sclr, df_test_X)
+print("train_X AFTER scaling:")
+print(train_X)
+print("test_X AFTER scaling:")
+print(test_X)
+
 ###############################
 input_shape = (11,)
 layers_info1 = [(5, 'sigmoid'), (5, 'sigmoid'), (5, 'sigmoid'), (5, 'sigmoid'), (2, 'softmax')]
@@ -137,7 +140,7 @@ for i, key in enumerate(layers_info_list):
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy', tf.keras.metrics.Precision(), tf.keras.metrics.Recall()])
 
     # load in data and put in the x and y parts
-    history = model.fit(x=df_train_X.values, y=train_y, epochs=5)
+    history = model.fit(x=train_X, y=train_y, epochs=5)
     print("history.history:")
     print(history.history)
 
@@ -154,7 +157,7 @@ for i, key in enumerate(layers_info_list):
     f1_scores = util.get_f1_scores(precisions, recalls)
 
     # put the test data in here
-    results = model.evaluate(x=df_test_X.values, y=test_y)
+    results = model.evaluate(x=test_X, y=test_y)
     print("results evaluated:")
     print(results)
 
