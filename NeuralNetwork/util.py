@@ -22,6 +22,18 @@ def get_data_stats(df):
     return unique_arr
 
 
+def get_f1_score(pre, rec):
+    return (2.0 * pre * rec)/(pre + rec)
+
+
+def get_f1_scores(precisions, recalls):
+    f1_scores = []
+    for i, pre in precisions:
+        f1_scores.append(get_f1_score(pre, recalls[i]))
+
+    return f1_scores
+
+
 def get_timestamp(date):
     if "-" in date:
         return datetime.datetime.strptime(date + "-01", "%Y-%m-%d").timestamp()
@@ -171,3 +183,22 @@ def map_unique(unique_labels):
 
 def one_hot_encode(values, num_classes):
     return np.eye(num_classes)[values]
+
+
+def plot(x, y, label, ax):
+    ax.plot(x, y, label=label)
+
+
+def initialize_plot(title, xlabel, ylabel):
+    fig, ax = plt.subplots()
+    ax.set_title(title)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    return fig, ax
+
+
+def save_clear_plt(png_file_name, ax, fig):
+    #plt.tight_layout()
+    ax.legend(loc="best")
+    fig.savefig(png_file_name)
+    fig.clf()

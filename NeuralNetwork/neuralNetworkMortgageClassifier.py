@@ -32,6 +32,14 @@ def count_labels(df):
     print("count1:")
     print(count1)
 
+
+def make_epoch_list(len):
+    epoch_list = []
+    for i in range(len):
+        epoch_list.append(i)
+
+    return epoch_list
+
 # list of columns to hash encode
 cols_to_hash = ['state']
 no_new_cols_per = 6
@@ -103,10 +111,21 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 
 # load in data and put in the x and y parts
 history = model.fit(x=df_train_X.values, y=train_y, epochs=5)
-print("history:")
-print(history)
+print("history.history:")
+print(history.history)
+
+precisions = history.history['precision']
+recalls = history.history['recall']
+losses = history.history['loss']
+
+f1_scores = util.get_f1_scores(precisions, recalls)
 
 # put the test data in here
 results = model.evaluate(x=df_test_X.values, y=test_y)
 print("results evaluated:")
 print(results)
+
+# todo: fix so that it works in loop
+fig_loss, ax_loss = util.initialize_plot("Neural Network loss", "# epochs", "loss")
+util.plot(make_epoch_list(len(losses)), losses, "", ax_loss)
+util.save_clear_plt("NeuralNetwork.png",ax_loss, fig_loss)
