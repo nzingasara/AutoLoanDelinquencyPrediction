@@ -37,8 +37,9 @@ def get_preds(est, input_fn):
 
 
 # todo: put mortgage_data back
-file_name = "mortgage_data.csv"
+#file_name = "mortgage_data.csv"
 #file_name = "mortgagePractice.csv"
+file_name = "mortgage_data_small.csv"
 
 df_train_X, df_train_y, df_test_X, df_test_y, feature_cols = util.load_prep_data(file_name)
 

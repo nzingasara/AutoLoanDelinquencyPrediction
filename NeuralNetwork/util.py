@@ -5,6 +5,15 @@ from sklearn.model_selection import StratifiedShuffleSplit
 import math
 import datetime
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+
+
+def fit_scaler(train):
+    return StandardScaler().fit(train)
+
+
+def scale_data(a_scaler, data):
+    return a_scaler.transform(data)
 
 
 def get_data_stats(df):

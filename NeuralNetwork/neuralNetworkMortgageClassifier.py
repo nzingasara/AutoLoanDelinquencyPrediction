@@ -20,6 +20,7 @@ def create_model(input_shape, layers_info):
 
     return model
 
+
 def count_labels(df):
     labels = df.values
     count0 = 0
@@ -59,6 +60,11 @@ print(df.head(n=5))
 df = util.hash_encoder(df, cols_to_hash, no_new_cols_per)
 print("df after hashing (%ld rows):" % df.shape[0])
 print(df.head(n=5))
+
+sclr = fit_scaler(df)
+df = scale_data(sclr, df)
+print("df_data AFTER scaling:")
+print(df_data)
 
 # separate into train/test X/y splits
 df_train_X, df_train_y, df_test_X, df_test_y = util.get_train_test_split(df)
