@@ -8,11 +8,15 @@ import util
 import tensorflow as tf
 
 
-
-def create_model(input_shape, output_sizes):
+def create_model(input_shape, layers_info):
     model = Sequential()
-    model.add(Dense(output_size, ))
-    #for output_size in output_sizes:
+    input_shape_given = False
+    for layer in layers_info:
+        if not input_shape_given:
+            model.add(Dense(layer[0], input_shape=input_shape, activation=layer[1]))
+            input_shape_given = True
+        else:
+            model.add(Dense(layer[0], activation=layer[1]))
 
     return model
 
@@ -95,37 +99,62 @@ test_y = util.one_hot_encode(df_test_y, 2)
 print("train_y one hot:")
 print(train_y[:10])
 
-model = Sequential()
+###############################
+input_shape = (11,)
+layers_info1 = [(5, 'sigmoid'), (5, 'sigmoid'), (5, 'sigmoid'), (5, 'sigmoid'), (2, 'softmax')]
+layers_info2 = [(5, 'relu'), (5, 'relu'), (5, 'relu'), (5, 'relu'), (2, 'softmax')]
+layers_info3 = [(10, 'relu'), (10, 'relu'), (10, 'relu'), (10, 'relu'), (2, 'softmax')]
+layers_info4 = [(20, 'relu'), (20, 'relu'), (20, 'relu'), (20, 'relu'), (2, 'softmax')]
 
-# get actual input shape and enter it here
-model.add(Dense(128, input_shape=(11,), activation='relu'))
-#model.add(LeakyReLU(0.1))
-model.add(Dense(64, activation='relu'))
-#model.add(LeakyReLU(0.1))
-model.add(Dense(32, activation='relu'))
-model.add(Dense(16, activation='relu'))
-model.add(Dense(2, activation='softmax'))
+layers_info_list = {"sigmoid_5_node_5_layer": layers_info1, "relu_5_node_5_layer": layers_info2,
+                    "relu_10_node_5_layer": layers_info3, "relu_20_node_5_layer": layers_info4}
 
-# check if classes are relatively equal or not. If not, change metric
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy', tf.keras.metrics.Precision(), tf.keras.metrics.Recall()])
-
-# load in data and put in the x and y parts
-history = model.fit(x=df_train_X.values, y=train_y, epochs=5)
-print("history.history:")
-print(history.history)
-
-precisions = history.history['precision']
-recalls = history.history['recall']
-losses = history.history['loss']
-
-f1_scores = util.get_f1_scores(precisions, recalls)
-
-# put the test data in here
-results = model.evaluate(x=df_test_X.values, y=test_y)
-print("results evaluated:")
-print(results)
-
-# todo: fix so that it works in loop
 fig_loss, ax_loss = util.initialize_plot("Neural Network loss", "# epochs", "loss")
-util.plot(make_epoch_list(len(losses)), losses, "", ax_loss)
-util.save_clear_plt("NeuralNetwork.png",ax_loss, fig_loss)
+fig_f1, ax_f1 = util.initialize_plot("Neural Network F1 Score", "# epochs", "F1 Score")
+
+for i, key in enumerate(layers_info_list):
+    model = create_model(input_shape, layers_info1)
+
+    model.summary()
+
+    #model = Sequential()
+
+    # get actual input shape and enter it here
+    #model.add(Dense(128, input_shape=(11,), activation='relu'))
+    #model.add(Dense(64, activation='relu'))
+    #model.add(Dense(32, activation='relu'))
+    #model.add(Dense(16, activation='relu'))
+    #model.add(Dense(2, activation='softmax'))
+    ###############################
+
+    # check if classes are relatively equal or not. If not, change metric
+    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy', tf.keras.metrics.Precision(), tf.keras.metrics.Recall()])
+
+    # load in data and put in the x and y parts
+    history = model.fit(x=df_train_X.values, y=train_y, epochs=5)
+    print("history.history:")
+    print(history.history)
+
+    precisions = None
+    recalls = None
+    if i == 0:
+        precisions = history.history['precision']
+        recalls = history.history['recall']
+    else:
+        precisions = history.history['precision_%ld' % i]
+        recalls = history.history['recall_%ld' % i]
+    losses = history.history['loss']
+
+    f1_scores = util.get_f1_scores(precisions, recalls)
+
+    # put the test data in here
+    results = model.evaluate(x=df_test_X.values, y=test_y)
+    print("results evaluated:")
+    print(results)
+
+    # plot loss and f1 score
+    util.plot(make_epoch_list(len(losses)), losses, key, ax_loss)
+    util.plot(make_epoch_list(len(losses)), f1_scores, key, ax_f1)
+
+util.save_clear_plt("nn_loss.png", ax_loss, fig_loss)
+util.save_clear_plt("nn_f1.png", ax_f1, fig_f1)

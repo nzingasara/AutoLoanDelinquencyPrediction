@@ -4,6 +4,7 @@ import category_encoders as ce
 from sklearn.model_selection import StratifiedShuffleSplit
 import math
 import datetime
+import matplotlib.pyplot as plt
 
 
 def get_data_stats(df):
@@ -28,7 +29,7 @@ def get_f1_score(pre, rec):
 
 def get_f1_scores(precisions, recalls):
     f1_scores = []
-    for i, pre in precisions:
+    for i, pre in enumerate(precisions):
         f1_scores.append(get_f1_score(pre, recalls[i]))
 
     return f1_scores
