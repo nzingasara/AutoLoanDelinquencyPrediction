@@ -49,7 +49,7 @@ cols_to_hash = ['state']
 no_new_cols_per = 6
 
 # load the data
-file_name = "mortgage_data_small.csv"
+file_name = "mortgage_data.csv"
 df, unique_labels = util.load_data(file_name)
 
 print("df after loading (%ld rows):" % df.shape[0])
@@ -113,7 +113,7 @@ fig_loss, ax_loss = util.initialize_plot("Neural Network loss", "# epochs", "los
 fig_f1, ax_f1 = util.initialize_plot("Neural Network F1 Score", "# epochs", "F1 Score")
 
 for i, key in enumerate(layers_info_list):
-    model = create_model(input_shape, layers_info1)
+    model = create_model(input_shape, layers_info_list[key])
 
     model.summary()
 
