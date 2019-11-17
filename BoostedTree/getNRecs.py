@@ -12,7 +12,7 @@ type_dict = {'loan_amnt': np.int64,
              }
 
 file_name="mortgage_data.csv"
-n = 700000
+n = 737560
 ratio = 0.5
 df = pd.read_csv(file_name, header=0, delimiter=",", dtype=type_dict)
 
@@ -40,4 +40,4 @@ df_new = df_new.sample(frac=1, replace=False)
 df_new['annual_inc'] = df_new['annual_inc'].astype(int)
 df_new['delinquent'] = df_new['delinquent'].astype(int)
 
-df_new.to_csv(path_or_buf="mortgage_data_small_50_50.csv", sep=",", index=False)
+df_new.to_csv(path_or_buf="mortgage_data_small_50_50_2.csv", sep=",", index=False)

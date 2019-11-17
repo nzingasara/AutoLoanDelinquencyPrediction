@@ -6,6 +6,7 @@ import math
 import datetime
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
+import copy
 
 
 def fit_scaler(train):
@@ -14,6 +15,35 @@ def fit_scaler(train):
 
 def scale_data(a_scaler, data):
     return a_scaler.transform(data)
+
+
+def get_preds_from_probs(arr):
+    preds = []
+    for prob in arr:
+        if prob[0] >= 0.5:
+            preds.append(0)
+        else:
+            preds.append(1)
+    return preds
+
+
+# should pass in the test set for df
+#def get_prediction_set(df_, n0, n1):#df_feat, df_lab, n0, n1):
+    #df = copy.deepcopy(df_)
+    #df_0s = df[df['delinquent'] == 0].head(n=n0)
+    #df_1s = df[df['delinquent'] == 1].head(n=n1)
+
+    #df_0s = df_lab[df_lab["delinquent"] == 0].head(n=n0)
+    #df_1s = df_lab[df_lab["delinquent"] == 1].head(n=n1)
+
+    #df_feat_0s = df_feat[df_feat.index.isin(df_0s.index)]
+    #df_feat_1s = df_feat[df_feat.index.isin(df_1s.index)]
+
+    #df = pd.concat([df, new_cols_df], axis=1)
+    #df_new0 = pd.concat([df_feat_0s, df_0s], axis=1)
+    #df_new1 = pd.concat([df_feat_1s, df_1s], axis=1)
+
+    #df_new = pd.concat([df_new0, df_new1], axis=0)
 
 
 def get_data_stats(df):
