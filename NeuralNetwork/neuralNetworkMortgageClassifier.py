@@ -52,7 +52,10 @@ no_new_cols_per = 6
 
 # load the data
 file_name = "mortgage_data_small_50_50_2.csv"
+auto_file_name = ""
 df, unique_labels = util.load_data(file_name)
+
+auto_df, auto_unique_labels = util.load_data(auto_file_name)
 
 print("df after loading (%ld rows):" % df.shape[0])
 print(df.head(n=5))
@@ -64,6 +67,9 @@ print(df.head(n=5))
 
 # separate into train/test X/y splits
 df_train_X, df_train_y, df_test_X, df_test_y = util.get_train_test_split(df)
+
+auto_df_test_X = auto_df
+auto_df_test_y = auto_df_test_X.pop('delinquent')
 
 print("df train X:")
 print(df_train_X.head(n=5))
@@ -98,12 +104,15 @@ print(df_train_y.values[:10])
 train_y = util.one_hot_encode(df_train_y.values, 2)
 test_y = util.one_hot_encode(df_test_y, 2)
 
+auto_test_y = util.one_hot_encode(auto_df_test_y, 2)
+
 print("train_y one hot:")
 print(train_y[:10])
 
 sclr = util.fit_scaler(df_train_X)
 train_X = util.scale_data(sclr, df_train_X)
 test_X = util.scale_data(sclr, df_test_X)
+auto_test_X = util.scale_data(sclr, auto_df_test_X)
 print("train_X AFTER scaling:")
 print(train_X)
 print("test_X AFTER scaling:")
@@ -136,6 +145,9 @@ lr = 0.0001
 input_shape = (11,)
 leaky_relu = LeakyReLU(0.1)
 
+layers_info_one_layer_one_node = [(1, leaky_relu), (2, 'softmax')]
+layers_info_no_hidden = [(2, 'softmax')]
+
 layers_info_small1 = [(5, leaky_relu), (2, 'softmax')]
 layers_info_small2 = [(10, leaky_relu), (2, 'softmax')]
 layers_info_small3 = [(20, leaky_relu), (2, 'softmax')]
@@ -154,8 +166,10 @@ layers_info5 = [(40, leaky_relu), (40, leaky_relu), (40, leaky_relu), (40, leaky
                     #"leakyRelu_20_node_5_layer_lr_%f" % lr: layers_info3, "leakyRelu_20_node_21_layer_lr_%f" % lr: layers_info4,
                     #"leakyRelu_40_node_5_layer_lr_%f" % lr: layers_info5}
 
-layers_info_list = {"leakyRelu_5_node_2_layer_lr_%f_small" % lr: layers_info_small1,"leakyRelu_10_node_2_layer_lr_%f_small" % lr:layers_info_small2,
-                    "leakyRelu_20_node_2_layer_lr_%f_small" % lr: layers_info_small3, "leakyRelu_40_node_2_layer_lr_%f_small" % lr: layers_info_small4}
+#layers_info_list = {"leakyRelu_5_node_2_layer_lr_%f_small" % lr: layers_info_small1,"leakyRelu_10_node_2_layer_lr_%f_small" % lr:layers_info_small2,
+                    #"leakyRelu_20_node_2_layer_lr_%f_small" % lr: layers_info_small3, "leakyRelu_40_node_2_layer_lr_%f_small" % lr: layers_info_small4}
+
+layers_info_list = {"leakyRelu_1_node_2_layer_lr_%f" % lr: layers_info_one_layer_one_node, "no_hidden_lr_%f" % lr: layers_info_no_hidden}
 
 fig_loss, ax_loss = util.initialize_plot("Neural Network loss lr=%f" % lr, "# epochs", "loss")
 fig_f1, ax_f1 = util.initialize_plot("Neural Network F1 Score lr=%f" % lr, "# epochs", "F1 Score")

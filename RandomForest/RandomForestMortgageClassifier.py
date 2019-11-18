@@ -2,6 +2,7 @@ import sklearn
 from sklearn import *
 import subprocess
 from sklearn import tree
+from sklearn.ensemble import RandomForestClassifier
 import graphviz
 from subprocess import check_call
 from sklearn.tree._tree import TREE_LEAF
@@ -158,16 +159,16 @@ def hash_encoder(df, cols, no_new_cols_per):
     return df
 
 
-# create a decision tree classifier object without fitting
-def create_decision_tree_classifier(**kwargs):
-    return tree.DecisionTreeClassifier(**kwargs)
+# create a random forest classifier object without fitting
+def create_random_forest_classifier(**kwargs):
+    return RandomForestClassifier(**kwargs)
 
 
 # fits the given classifier to the data given
-def fit_decision_tree_classifier(X, y, clf=None, **kwargs):
+def fit_random_forest_classifier(X, y, clf=None, **kwargs):
     # if no classifier passed, create one
     if clf is None:
-        clf = create_decision_tree_classifier(**kwargs)
+        clf = create_random_forest_classifier(**kwargs)
 
     # fit
     #start = time()
@@ -191,7 +192,7 @@ def plot_max_depth_learning_curve(title, x_label, y_label, X, y, scoring_metric,
     # for loop add max_iter range to hyper_params for plotting
     max_depth_list = np.logspace(0, 6, num=7, base=2.0)
 
-    hyper_params_cpy = {}#deepcopy(hyper_params)
+    hyper_params_cpy = {"max_features":'auto', "oob_score": True, "n_estimators":100}#deepcopy(hyper_params)
 
     criterion_list = ["entropy"]
 
@@ -213,7 +214,9 @@ def plot_max_depth_learning_curve(title, x_label, y_label, X, y, scoring_metric,
             hyper_params_cpy["max_depth"] = iteration
 
             # create the neural net with the hyper parameter dictionary
-            estimator = create_decision_tree_classifier(**hyper_params_cpy)
+            estimator = create_random_forest_classifier(**hyper_params_cpy)
+            print("estimator:")
+            print(estimator)
 
             #start = time()
             train_sizes, train_scores, test_scores = learning_curve(estimator, X, y, cv=kfolds, scoring=scoring_metric,
@@ -253,19 +256,6 @@ def plot_max_depth_learning_curve(title, x_label, y_label, X, y, scoring_metric,
     return wall_clock_times, iterations_list
 
 
-# print the decision tree structure to a png file
-def save_decision_tree_to_file(clf, data_obj, out_file):
-    # export the .dot file
-    tree.export_graphviz(clf, out_file=out_file, feature_names=data_obj.feature_names,
-                                    class_names=data_obj.target_names)
-
-    # convert the .dot file to a png image file
-    try:
-        check_call(['dot', '-Tpng', out_file, '-o', out_file + '.png'])
-    except subprocess.CalledProcessError as e:
-        print("Exception thrown by 'check_call': " + e.output)
-
-
 if __name__ == "__main__":
     # list of columns to hash encode
     cols_to_hash = ['state']
@@ -291,9 +281,7 @@ if __name__ == "__main__":
     print(y_test)
 
     # hyperparams to change: criterion = 'entropy'
-    dt_clf = fit_decision_tree_classifier(data_object.data, data_object.target, random_state=0, **{"criterion": 'entropy', "max_depth": 5})
+    dt_clf = fit_random_forest_classifier(data_object.data, data_object.target, random_state=0, **{"criterion": 'entropy', "max_depth": 5})
 
-    save_decision_tree_to_file(dt_clf, data_object, "decisionTreeVisualization")
-
-    plot_max_depth_learning_curve("Decision Tree Accuracy Score as Function of Max Depth", "max depth", "accuracy score", X_df_,
+    plot_max_depth_learning_curve("Random Forest Accuracy Score as Function of Max Depth", "max depth", "accuracy score", X_df_,
                                   y_df_, 'accuracy', kfolds=5, train_size=1.0)
