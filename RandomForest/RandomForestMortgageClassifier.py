@@ -2,6 +2,7 @@ import sklearn
 from sklearn import *
 import subprocess
 from sklearn import tree
+from sklearn.metrics import f1_score
 from sklearn.ensemble import RandomForestClassifier
 import graphviz
 from subprocess import check_call
@@ -190,7 +191,8 @@ def plot_max_depth_learning_curve(title, x_label, y_label, X, y, scoring_metric,
     train_mean_scores = []
     test_mean_scores = []
     # for loop add max_iter range to hyper_params for plotting
-    max_depth_list = np.logspace(0, 6, num=7, base=2.0)
+    #max_depth_list = np.logspace(0, 6, num=7, base=2.0)
+    max_depth_list = [32, 64]
 
     hyper_params_cpy = {"max_features":'auto', "oob_score": True, "n_estimators":100}#deepcopy(hyper_params)
 
@@ -199,6 +201,9 @@ def plot_max_depth_learning_curve(title, x_label, y_label, X, y, scoring_metric,
     color_arr = [("r", "g"), ("b", "m")]
 
     fig, ax = initialize_plot(title, x_label, y_label)
+
+    best_mean_test_score = -1
+    hyper_params_best = {}
 
     i = 0
     wall_clock_times = [[], []]
@@ -240,6 +245,12 @@ def plot_max_depth_learning_curve(title, x_label, y_label, X, y, scoring_metric,
             train_mean_scores.append(train_score_mean)
             test_mean_scores.append(test_score_mean)
 
+            if test_score_mean > best_mean_test_score:
+                best_mean_test_score = test_score_mean
+                hyper_params_best = deepcopy(hyper_params_cpy)
+                print("best hyperparams so far:")
+                print(hyper_params_best)
+
         # plot
         plot(iterations_list, train_mean_scores, "training_%s" % crit, ax)
         plot(iterations_list, test_mean_scores, "test_%s" % crit, ax)
@@ -253,7 +264,7 @@ def plot_max_depth_learning_curve(title, x_label, y_label, X, y, scoring_metric,
                    #"wall clock time", iterations_list, wall_clock_times[1], None, None, y_lim=None)
 
     #print("*** Completed plot_max_depth_learning_curve now!!!***")
-    return wall_clock_times, iterations_list
+    return wall_clock_times, iterations_list, hyper_params_best
 
 
 if __name__ == "__main__":
@@ -267,7 +278,15 @@ if __name__ == "__main__":
     print("df_data:")
     print(df_data)
 
+    df_auto_data, auto_uniques = load_data("auto_data.csv")
+    df_auto_data = hash_encoder(df_auto_data, cols_to_hash, no_new_cols_per)
+
     data_object, X_df_, y_df_ = convert_to_bunch(df_data, "delinquent")
+
+    data_object_auto, X_auto_df_, y_auto_df_ = convert_to_bunch(df_auto_data, "delinquent")
+
+    print("X_df_ columns:")
+    print(X_df_.columns)
 
     # separate data into train and test data
     X_train, X_test, y_train, y_test = train_test_split(X_df_, y_df_, test_size=0.2, shuffle=True, stratify=y_df_)
@@ -280,8 +299,41 @@ if __name__ == "__main__":
     print("y_test:")
     print(y_test)
 
-    # hyperparams to change: criterion = 'entropy'
-    dt_clf = fit_random_forest_classifier(data_object.data, data_object.target, random_state=0, **{"criterion": 'entropy', "max_depth": 5})
-
-    plot_max_depth_learning_curve("Random Forest Accuracy Score as Function of Max Depth", "max depth", "accuracy score", X_df_,
+    wall_clock_times, iterations_list, hyper_params_best = plot_max_depth_learning_curve("Random Forest Accuracy Score as Function of Max Depth", "max depth", "accuracy score", X_df_,
                                   y_df_, 'accuracy', kfolds=5, train_size=1.0)
+
+    print("best hyperparams:")
+    print(hyper_params_best)
+
+    # hyperparams to change: criterion = 'entropy'
+    #rf_clf = fit_random_forest_classifier(data_object.data, data_object.target, random_state=0, **hyper_params_best)
+    rf_clf = fit_random_forest_classifier(X_train, y_train, random_state=0, **hyper_params_best)
+    final_train_score_mortgage = rf_clf.score(X_train, y_train)
+    final_test_score_mortgage = rf_clf.score(X_test, y_test)
+    print("final train score mortgage:")
+    print(final_train_score_mortgage)
+    print("final test score mortgage:")
+    print(final_test_score_mortgage)
+
+    print("feature importances:")
+    print(rf_clf.feature_importances_)
+
+    # get the f1 score on 0s (non-delinquent) and 1s (delinquent)
+    # won't use accuracy since the auto loan data has imbalance in 0s and 1s
+    auto_test_predictions = rf_clf.predict(X_auto_df_)
+
+    print("np.unique(auto_test_predictions):")
+    print(np.unique(auto_test_predictions))
+    print("number of predictions auto:")
+    print(len(auto_test_predictions))
+    print("# 0s in auto predictions:")
+    print(len(auto_test_predictions[auto_test_predictions == 0]))
+    print("# 1s in auto predictions:")
+    print(len(auto_test_predictions[auto_test_predictions == 1]))
+
+    print("type(auto_test_predictions):")
+    print(type(auto_test_predictions))
+    print("auto test f1 score for 0s:")
+    print(f1_score(y_auto_df_, auto_test_predictions, pos_label=0))
+    print("auto test f1 score for 1s:")
+    print(f1_score(y_auto_df_, auto_test_predictions, pos_label=1))
