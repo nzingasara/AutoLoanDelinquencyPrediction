@@ -17,6 +17,24 @@ import category_encoders as ce
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from sklearn.model_selection import learning_curve
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import Normalizer
+
+
+def fit_normalizer(train):
+    return Normalizer().fit(train)
+
+
+def normalize_data(nmlzr, data):
+    return nmlzr.transform(data)
+
+
+def fit_scaler(train):
+    return StandardScaler().fit(train)
+
+
+def scale_data(a_scaler, data):
+    return a_scaler.transform(data)
 
 
 def plot(x, y, label, ax):
@@ -302,8 +320,24 @@ if __name__ == "__main__":
     print("y_test:")
     print(y_test)
 
-    wall_clock_times, iterations_list, hyper_params_best = plot_max_depth_learning_curve("Random Forest Accuracy Score as Function of Max Depth", "max depth", "accuracy score", X_df_,
-                                  y_df_, 'accuracy', kfolds=5, train_size=1.0)
+    # standardize the mortgage training and test X data
+    #sclr = fit_scaler(X_train)
+    #X_train = scale_data(sclr, X_train)
+    #X_test = scale_data(sclr, X_test)
+    #X_auto = scale_data(sclr, X_auto_df_)
+    nmlzr = fit_normalizer(X_train)
+    X_train = normalize_data(nmlzr, X_train)
+    X_test = normalize_data(nmlzr, X_test)
+    X_auto = normalize_data(nmlzr, X_auto_df_)
+
+    print("X_train after normalizing:")
+    print(X_train)
+    print("X_test after normalizing:")
+    print(X_test)
+
+    wall_clock_times, iterations_list, hyper_params_best = plot_max_depth_learning_curve(
+        "Random Forest Accuracy Score as Function of Max Depth", "max depth", "accuracy score", X_train, y_train,
+        'accuracy', kfolds=5, train_size=1.0)
 
     print("best hyperparams:")
     print(hyper_params_best)
@@ -323,7 +357,7 @@ if __name__ == "__main__":
 
     # get the f1 score on 0s (non-delinquent) and 1s (delinquent)
     # won't use accuracy since the auto loan data has imbalance in 0s and 1s
-    auto_test_predictions = rf_clf.predict(X_auto_df_)
+    auto_test_predictions = rf_clf.predict(X_auto)
 
     print("np.unique(auto_test_predictions):")
     print(np.unique(auto_test_predictions))

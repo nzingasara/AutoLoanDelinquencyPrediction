@@ -1,0 +1,303 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red205\green190\blue151;\red122\green37\blue30;}
+{\*\expandedcolortbl;;\cssrgb\c84314\c78824\c65490;\csgenericrgb\c47826\c14510\c11688\c85000;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \CocoaLigature0 df shape before dropping Nans:\
+729053\
+df shape after dropping Nans:\
+729053\
+unique labels:\
+[1. 0.]\
+unique labels count:\
+2\
+1.0: 360273\
+0.0: 368780\
+df_data before hashing:\
+        loan_amnt state  annual_inc  int_rate  delinquent  credit_score  disbursal_timestamp\
+642037   256000.0    CA     44130.0     6.500         1.0         725.0         1.164949e+09\
+439050   268000.0    AZ     73169.0     5.875         1.0         801.0         1.104556e+09\
+273576   148000.0    MD     21308.0     6.375         0.0         613.0         1.133413e+09\
+283567   255000.0    NC     39918.0     7.000         1.0         679.0         1.164949e+09\
+570107   118000.0    NV     47699.0     7.125         1.0         761.0         1.167628e+09\
+...           ...   ...         ...       ...         ...           ...                  ...\
+321449    80000.0    WI     12411.0     6.125         0.0         776.0         1.070255e+09\
+183464   138000.0    CO     21584.0     6.000         1.0         747.0         1.133413e+09\
+315455   169000.0    MA     60150.0     7.250         1.0         727.0         1.164949e+09\
+136786   261000.0    HI     70966.0     7.875         0.0         639.0         9.756468e+08\
+706509   112000.0    PA     36055.0     3.625         0.0         810.0         1.354338e+09\
+\
+[729053 rows x 7 columns]\
+<hash> df rows: 729053\
+hashing col state\
+new cols df rows: 729053\
+BEFORE concatting for col state\
+<hash> df rows: 729053\
+<hash> new cols rows: 729053\
+concatting for col state\
+<hash> df rows: 729053\
+df_data:\
+        loan_amnt  annual_inc  int_rate  delinquent  credit_score  ...  state_1  state_2  state_3  state_4  state_5\
+0        256000.0     44130.0     6.500         1.0         725.0  ...        0        0        1        0        0\
+1        268000.0     73169.0     5.875         1.0         801.0  ...        0        1        0        0        0\
+2        148000.0     21308.0     6.375         0.0         613.0  ...        0        0        0        0        1\
+3        255000.0     39918.0     7.000         1.0         679.0  ...        0        0        0        0        0\
+4        118000.0     47699.0     7.125         1.0         761.0  ...        0        1        0        0        0\
+...           ...         ...       ...         ...           ...  ...      ...      ...      ...      ...      ...\
+729048    80000.0     12411.0     6.125         0.0         776.0  ...        0        0        1        0        0\
+729049   138000.0     21584.0     6.000         1.0         747.0  ...        0        0        0        1        0\
+729050   169000.0     60150.0     7.250         1.0         727.0  ...        0        0        0        0        0\
+729051   261000.0     70966.0     7.875         0.0         639.0  ...        0        1        0        0        0\
+729052   112000.0     36055.0     3.625         0.0         810.0  ...        0        0        0        1        0\
+\
+[729053 rows x 12 columns]\
+df shape before dropping Nans:\
+1615\
+df shape after dropping Nans:\
+1615\
+unique labels:\
+[0. 1.]\
+unique labels count:\
+2\
+0.0: 1455\
+1.0: 160\
+<hash> df rows: 1615\
+hashing col state\
+new cols df rows: 1615\
+BEFORE concatting for col state\
+<hash> df rows: 1615\
+<hash> new cols rows: 1615\
+concatting for col state\
+<hash> df rows: 1615\
+X_df_ columns:\
+Index(['loan_amnt', 'annual_inc', 'int_rate', 'credit_score',\
+       'disbursal_timestamp', 'state_0', 'state_1', 'state_2', 'state_3',\
+       'state_4', 'state_5'],\
+      dtype='object')\
+X_train:\
+        loan_amnt  annual_inc  int_rate  credit_score  disbursal_timestamp  ...  state_1  state_2  state_3  state_4  state_5\
+81548    176000.0     34246.0     6.750         700.0         1.164949e+09  ...        0        1        0        0        0\
+657175   164000.0     54045.0     2.750         680.0         1.322716e+09  ...        0        0        0        0        1\
+84049     90000.0     16500.0     6.875         679.0         1.196485e+09  ...        1        0        0        0        0\
+646757   131000.0     51617.0     6.375         772.0         1.133413e+09  ...        0        0        1        0        0\
+111408   150000.0     36114.0     4.750         740.0         1.041397e+09  ...        0        0        1        0        0\
+...           ...         ...       ...           ...                  ...  ...      ...      ...      ...      ...      ...\
+153472   130000.0     35473.0     7.250         626.0         1.038719e+09  ...        0        0        0        0        0\
+267981   308000.0    143792.0     5.750         653.0         1.070255e+09  ...        1        0        0        0        0\
+466104   137000.0     26644.0     6.500         769.0         1.164949e+09  ...        0        0        0        0        0\
+162122   250000.0     27922.0     3.625         755.0         1.480568e+09  ...        1        0        0        0        0\
+636133   151000.0     24799.0     6.875         680.0         1.167628e+09  ...        0        1        0        0        0\
+\
+[583242 rows x 11 columns]\
+y_train\
+81548     1.0\
+657175    0.0\
+84049     1.0\
+646757    0.0\
+111408    1.0\
+         ... \
+153472    0.0\
+267981    1.0\
+466104    0.0\
+162122    1.0\
+636133    1.0\
+Name: delinquent, Length: 583242, dtype: float64\
+X_test:\
+        loan_amnt  annual_inc  int_rate  credit_score  disbursal_timestamp  ...  state_1  state_2  state_3  state_4  state_5\
+14775    284000.0     56424.0     4.125         817.0         1.385874e+09  ...        0        0        0        0        0\
+97205    115000.0     24922.0     6.500         651.0         1.133413e+09  ...        1        0        0        0        0\
+239651   172000.0     35229.0     6.750         796.0         1.007183e+09  ...        1        0        0        0        0\
+53513    390000.0     65678.0     3.750         779.0         1.322716e+09  ...        0        0        0        0        1\
+29468    247000.0     44817.0     7.000         636.0         9.756468e+08  ...        0        1        0        0        0\
+...           ...         ...       ...           ...                  ...  ...      ...      ...      ...      ...      ...\
+175637   118000.0     23255.0     6.875         738.0         1.133413e+09  ...        1        0        0        0        0\
+557855   203000.0     56470.0     4.500         798.0         1.228108e+09  ...        1        0        0        0        0\
+686650   186000.0     24990.0     3.875         795.0         1.354338e+09  ...        0        0        1        0        0\
+481682   108000.0     21554.0     3.500         797.0         1.354338e+09  ...        0        0        0        0        0\
+38142    245000.0     31660.0     5.375         794.0         1.101877e+09  ...        0        0        0        1        0\
+\
+[145811 rows x 11 columns]\
+y_test:\
+14775     0.0\
+97205     1.0\
+239651    0.0\
+53513     0.0\
+29468     1.0\
+         ... \
+175637    0.0\
+557855    0.0\
+686650    0.0\
+481682    0.0\
+38142     0.0\
+Name: delinquent, Length: 145811, dtype: float64\
+X_train after normalizing:\
+[[1.51079547e-04 2.93969897e-05 5.79424401e-09 ... 0.00000000e+00\
+  0.00000000e+00 0.00000000e+00]\
+ [1.23987347e-04 4.08591231e-05 2.07905613e-09 ... 0.00000000e+00\
+  0.00000000e+00 7.56020411e-10]\
+ [7.52203201e-05 1.37903920e-05 5.74599667e-09 ... 0.00000000e+00\
+  0.00000000e+00 0.00000000e+00]\
+ ...\
+ [1.17601694e-04 2.28713834e-05 5.57964240e-09 ... 0.00000000e+00\
+  0.00000000e+00 0.00000000e+00]\
+ [1.68854067e-04 1.88589731e-05 2.44838398e-09 ... 0.00000000e+00\
+  0.00000000e+00 0.00000000e+00]\
+ [1.29322053e-04 2.12387920e-05 5.88800739e-09 ... 0.00000000e+00\
+  0.00000000e+00 0.00000000e+00]]\
+X_test after normalizing:\
+[[2.04924830e-04 4.07136571e-05 2.97646100e-09 ... 0.00000000e+00\
+  0.00000000e+00 0.00000000e+00]\
+ [1.01463438e-04 2.19884503e-05 5.73488995e-09 ... 0.00000000e+00\
+  0.00000000e+00 0.00000000e+00]\
+ [1.70773366e-04 3.49777612e-05 6.70186176e-09 ... 0.00000000e+00\
+  0.00000000e+00 0.00000000e+00]\
+ ...\
+ [1.37336469e-04 1.84518191e-05 2.86117643e-09 ... 7.38368111e-10\
+  0.00000000e+00 0.00000000e+00]\
+ [7.97437565e-05 1.59147864e-05 2.58428840e-09 ... 0.00000000e+00\
+  0.00000000e+00 0.00000000e+00]\
+ [2.22347820e-04 2.87327837e-05 4.87803892e-09 ... 0.00000000e+00\
+  9.07542124e-10 0.00000000e+00]]\
+*** In plot_max_depth_learning_curve now!!!***\
+estimator:\
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',\
+                       max_depth=1.0, max_features='auto', max_leaf_nodes=None,\
+                       min_impurity_decrease=0.0, min_impurity_split=None,\
+                       min_samples_leaf=1, min_samples_split=2,\
+                       min_weight_fraction_leaf=0.0, n_estimators=100,\
+                       n_jobs=None, oob_score=True, random_state=None,\
+                       verbose=0, warm_start=False)\
+~~~~~~~~~~~~~~~~~~\
+max depth:\
+1.0\
+train_mean:\
+[0.50636593]\
+test_score_mean:\
+[0.50636271]\
+best hyperparams so far:\
+\{'max_features': 'auto', 'oob_score': True, 'n_estimators': 100, 'criterion': 'entropy', 'max_depth': 1.0\}\
+estimator:\
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',\
+                       max_depth=2.0, max_features='auto', max_leaf_nodes=None,\
+                       min_impurity_decrease=0.0, min_impurity_split=None,\
+                       min_samples_leaf=1, min_samples_split=2,\
+                       min_weight_fraction_leaf=0.0, n_estimators=100,\
+                       n_jobs=None, oob_score=True, random_state=None,\
+                       verbose=0, warm_start=False)\
+~~~~~~~~~~~~~~~~~~\
+max depth:\
+2.0\
+train_mean:\
+[0.51268965]\
+test_score_mean:\
+[0.51267741]\
+best hyperparams so far:\
+\{'max_features': 'auto', 'oob_score': True, 'n_estimators': 100, 'criterion': 'entropy', 'max_depth': 2.0\}\
+estimator:\
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',\
+                       max_depth=4.0, max_features='auto', max_leaf_nodes=None,\
+                       min_impurity_decrease=0.0, min_impurity_split=None,\
+                       min_samples_leaf=1, min_samples_split=2,\
+                       min_weight_fraction_leaf=0.0, n_estimators=100,\
+                       n_jobs=None, oob_score=True, random_state=None,\
+                       verbose=0, warm_start=False)\
+~~~~~~~~~~~~~~~~~~\
+max depth:\
+4.0\
+train_mean:\
+[0.51860015]\
+test_score_mean:\
+[0.51850348]\
+best hyperparams so far:\
+\{'max_features': 'auto', 'oob_score': True, 'n_estimators': 100, 'criterion': 'entropy', 'max_depth': 4.0\}\
+estimator:\
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',\
+                       max_depth=8.0, max_features='auto', max_leaf_nodes=None,\
+                       min_impurity_decrease=0.0, min_impurity_split=None,\
+                       min_samples_leaf=1, min_samples_split=2,\
+                       min_weight_fraction_leaf=0.0, n_estimators=100,\
+                       n_jobs=None, oob_score=True, random_state=None,\
+                       verbose=0, warm_start=False)\
+~~~~~~~~~~~~~~~~~~\
+max depth:\
+8.0\
+train_mean:\
+[0.52614206]\
+test_score_mean:\
+[0.52566859]\
+best hyperparams so far:\
+\{'max_features': 'auto', 'oob_score': True, 'n_estimators': 100, 'criterion': 'entropy', 'max_depth': 8.0\}\
+estimator:\
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',\
+                       max_depth=16.0, max_features='auto', max_leaf_nodes=None,\
+                       min_impurity_decrease=0.0, min_impurity_split=None,\
+                       min_samples_leaf=1, min_samples_split=2,\
+                       min_weight_fraction_leaf=0.0, n_estimators=100,\
+                       n_jobs=None, oob_score=True, random_state=None,\
+                       verbose=0, warm_start=False)\
+~~~~~~~~~~~~~~~~~~\
+max depth:\
+16.0\
+train_mean:\
+[0.53031614]\
+test_score_mean:\
+[0.52815127]\
+best hyperparams so far:\
+\{'max_features': 'auto', 'oob_score': True, 'n_estimators': 100, 'criterion': 'entropy', 'max_depth': 16.0\}\
+estimator:\
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',\
+                       max_depth=32.0, max_features='auto', max_leaf_nodes=None,\
+                       min_impurity_decrease=0.0, min_impurity_split=None,\
+                       min_samples_leaf=1, min_samples_split=2,\
+                       min_weight_fraction_leaf=0.0, n_estimators=100,\
+                       n_jobs=None, oob_score=True, random_state=None,\
+                       verbose=0, warm_start=False)\
+~~~~~~~~~~~~~~~~~~\
+max depth:\
+32.0\
+train_mean:\
+[0.5322806]\
+test_score_mean:\
+[0.52851818]\
+best hyperparams so far:\
+\{'max_features': 'auto', 'oob_score': True, 'n_estimators': 100, 'criterion': 'entropy', 'max_depth': 32.0\}\
+estimator:\
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',\
+                       max_depth=64.0, max_features='auto', max_leaf_nodes=None,\
+                       min_impurity_decrease=0.0, min_impurity_split=None,\
+                       min_samples_leaf=1, min_samples_split=2,\
+                       min_weight_fraction_leaf=0.0, n_estimators=100,\
+                       n_jobs=None, oob_score=True, random_state=None,\
+                       verbose=0, warm_start=False)\
+~~~~~~~~~~~~~~~~~~\
+max depth:\
+64.0\
+train_mean:\
+[0.53173794]\
+test_score_mean:\
+[0.5279198]\
+best hyperparams:\
+\{'max_features': 'auto', 'oob_score': True, 'n_estimators': 100, 'criterion': 'entropy', 'max_depth': 32.0\}\
+final train score mortgage:\
+0.5314740707973705\
+final test score mortgage:\
+0.5275184999759963\
+feature importances:\
+[0.56103754 0.38120252 0.         0.05078961 0.00697033 0.\
+ 0.         0.         0.         0.         0.        ]\
+np.unique(auto_test_predictions):\
+[0. 1.]\
+number of predictions auto:\
+1615\
+# 0s in auto predictions:\
+433\
+# 1s in auto predictions:\
+1182\
+type(auto_test_predictions):\
+<class 'numpy.ndarray'>\
+auto test f1 score for 0s:\
+0.42055084745762705\
+auto test f1 score for 1s:\
+0.18479880774962743}
