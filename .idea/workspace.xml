@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="effa37ed-c39f-4a3f-99e0-6572fbff0042" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/DecisionTree/decisionTreeMortgageClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/DecisionTree/decisionTreeMortgageClassifier.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RandomForest/RandomForestMortgageClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/RandomForest/RandomForestMortgageClassifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RandomForest/bestRandomForestInfo.rtf" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RandomForest/RandomForestMortgageClassifier.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="666">
-              <caret line="338" column="67" lean-forward="true" selection-start-line="338" selection-start-column="67" selection-end-line="338" selection-end-column="67" />
+            <state relative-caret-position="392">
+              <caret line="284" column="27" lean-forward="true" selection-start-line="284" selection-start-column="27" selection-end-line="284" selection-end-column="27" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -28,7 +30,7 @@
         <entry file="file://$PROJECT_DIR$/NeuralNetwork/neuralNetworkMortgageClassifier.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-553">
-              <caret line="46" column="21" lean-forward="true" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
+              <caret line="46" column="21" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -36,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DecisionTree/decisionTreeMortgageClassifier.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" selection-end-line="299" />
+            <state relative-caret-position="738">
+              <caret line="304" column="38" lean-forward="true" selection-start-line="304" selection-start-column="38" selection-end-line="304" selection-end-column="38" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -59,10 +61,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>max_depth_list</find>
-      <find>f1</find>
-      <find>create_decision_tree_classifier</find>
-      <find>fit_decision</find>
       <find>save_decision_tree_to_file</find>
       <find>decision</find>
       <find>tree</find>
@@ -80,7 +78,6 @@
       <find>fit_random_forest_classifier</find>
       <find>RandomForestClassifier</find>
       <find>create_random_forest_classifier</find>
-      <find>load_data</find>
       <find>data_object</find>
       <find>train_test_split</find>
       <find>hash</find>
@@ -88,7 +85,12 @@
       <find>X_auto_df_</find>
       <find>unique</find>
       <find>deep</find>
+      <find>convert_to_bunch</find>
+      <find>ce_hash</find>
       <find>hash_encoder</find>
+      <find>load_data</find>
+      <find>df_data:</find>
+      <find>columns</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -100,8 +102,8 @@
         <option value="$PROJECT_DIR$/../../Homeworks/Homework4/hw4-skeleton/Q2/random_forest.py" />
         <option value="$PROJECT_DIR$/../../Homeworks/Homework4/hw4-skeleton/Q2/decision_tree.py" />
         <option value="$PROJECT_DIR$/NeuralNetwork/neuralNetworkMortgageClassifier.py" />
-        <option value="$PROJECT_DIR$/DecisionTree/decisionTreeMortgageClassifier.py" />
         <option value="$PROJECT_DIR$/RandomForest/RandomForestMortgageClassifier.py" />
+        <option value="$PROJECT_DIR$/DecisionTree/decisionTreeMortgageClassifier.py" />
       </list>
     </option>
   </component>
@@ -240,20 +242,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DecisionTree/decisionTreeMortgageClassifier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" selection-end-line="299" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NeuralNetwork/neuralNetworkMortgageClassifier.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-553">
-          <caret line="46" column="21" lean-forward="true" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
+          <caret line="46" column="21" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -262,8 +254,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RandomForest/RandomForestMortgageClassifier.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
-          <caret line="338" column="67" lean-forward="true" selection-start-line="338" selection-start-column="67" selection-end-line="338" selection-end-column="67" />
+        <state relative-caret-position="392">
+          <caret line="284" column="27" lean-forward="true" selection-start-line="284" selection-start-column="27" selection-end-line="284" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DecisionTree/decisionTreeMortgageClassifier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="738">
+          <caret line="304" column="38" lean-forward="true" selection-start-line="304" selection-start-column="38" selection-end-line="304" selection-end-column="38" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>

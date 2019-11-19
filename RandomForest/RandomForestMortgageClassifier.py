@@ -191,8 +191,8 @@ def plot_max_depth_learning_curve(title, x_label, y_label, X, y, scoring_metric,
     train_mean_scores = []
     test_mean_scores = []
     # for loop add max_iter range to hyper_params for plotting
-    #max_depth_list = np.logspace(0, 6, num=7, base=2.0)
-    max_depth_list = [32, 64]
+    max_depth_list = np.logspace(0, 6, num=7, base=2.0)
+    #max_depth_list = [32, 64]
 
     hyper_params_cpy = {"max_features":'auto', "oob_score": True, "n_estimators":100}#deepcopy(hyper_params)
 
@@ -274,6 +274,9 @@ if __name__ == "__main__":
 
     # load the data
     df_data, uniques = load_data("mortgage_data_small_50_50_2.csv")
+
+    print("df_data before hashing:")
+    print(df_data)
     df_data = hash_encoder(df_data, cols_to_hash, no_new_cols_per)
     print("df_data:")
     print(df_data)

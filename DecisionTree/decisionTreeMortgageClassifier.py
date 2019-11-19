@@ -279,6 +279,9 @@ if __name__ == "__main__":
 
     data_object, X_df_, y_df_ = convert_to_bunch(df_data, "delinquent")
 
+    print("X_df_ columns:")
+    print(X_df_.columns)
+
     # separate data into train and test data
     X_train, X_test, y_train, y_test = train_test_split(X_df_, y_df_, test_size=0.2, shuffle=True, stratify=y_df_)
     print("X_train:")
@@ -297,3 +300,6 @@ if __name__ == "__main__":
 
     plot_max_depth_learning_curve("Decision Tree Accuracy Score as Function of Max Depth", "max depth", "accuracy score", X_df_,
                                   y_df_, 'accuracy', kfolds=5, train_size=1.0)
+
+    print("dt clf feature importance:")
+    print(dt_clf.feature_importances_)
