@@ -190,7 +190,7 @@ def plot_max_depth_learning_curve(title, x_label, y_label, X, y, scoring_metric,
     train_mean_scores = []
     test_mean_scores = []
     # for loop add max_iter range to hyper_params for plotting
-    max_depth_list = np.logspace(0, 6, num=7, base=2.0)
+    max_depth_list = np.logspace(0, 7, num=8, base=2.0)
 
     hyper_params_cpy = {}#deepcopy(hyper_params)
 
@@ -273,7 +273,7 @@ if __name__ == "__main__":
     no_new_cols_per = 6
 
     # load the data
-    df_data, uniques = load_data("mortgage_data_small_50_50_2.csv")
+    df_data, uniques = load_data("auto_data.csv")
     df_data = hash_encoder(df_data, cols_to_hash, no_new_cols_per)
     print("df_data:")
     print(df_data)
@@ -295,12 +295,12 @@ if __name__ == "__main__":
     print(y_test)
 
     # hyperparams to change: criterion = 'entropy'
-    dt_clf = fit_decision_tree_classifier(X_train, y_train, random_state=0, **{"criterion": 'entropy', "max_depth": 1})
+    dt_clf = fit_decision_tree_classifier(X_train, y_train, random_state=0, **{"criterion": 'entropy', "max_depth": 100})
 
     save_decision_tree_to_file(dt_clf, data_object, "decisionTreeVisualization")
 
     plot_max_depth_learning_curve("Decision Tree Accuracy Score as Function of Max Depth", "max depth", "accuracy score", X_df_,
-                                  y_df_, 'accuracy', kfolds=5, train_size=1.0)
+                                  y_df_, 'f1', kfolds=5, train_size=1.0)
 
     print("dt clf feature importance:")
     print(dt_clf.feature_importances_)
