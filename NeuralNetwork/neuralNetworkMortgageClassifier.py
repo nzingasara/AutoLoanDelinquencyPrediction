@@ -7,6 +7,7 @@ from keras.datasets import mnist
 import util
 import tensorflow as tf
 import pandas as pd
+import tensorflow_addons as tfa
 
 
 def create_model(input_shape, layers_info):
@@ -52,7 +53,7 @@ no_new_cols_per = 6
 
 # load the data
 file_name = "mortgage_data_small_50_50_2.csv"
-auto_file_name = ""
+auto_file_name = "auto_data.csv"
 df, unique_labels = util.load_data(file_name)
 
 auto_df, auto_unique_labels = util.load_data(auto_file_name)
@@ -65,11 +66,14 @@ df = util.hash_encoder(df, cols_to_hash, no_new_cols_per)
 print("df after hashing (%ld rows):" % df.shape[0])
 print(df.head(n=5))
 
+auto_df = util.hash_encoder(auto_df, cols_to_hash, no_new_cols_per)
+
 # separate into train/test X/y splits
 df_train_X, df_train_y, df_test_X, df_test_y = util.get_train_test_split(df)
 
 auto_df_test_X = auto_df
 auto_df_test_y = auto_df_test_X.pop('delinquent')
+auto_df_test_y = auto_df_test_y.astype(np.int32)
 
 print("df train X:")
 print(df_train_X.head(n=5))
@@ -80,6 +84,8 @@ print("df train y head:")
 print(df_train_y.head(n=5))
 print("df test y head:")
 print(df_test_y.head(n=5))
+print("auto df test y head:")
+print(auto_df_test_y.head(n=5))
 
 print("df_train_y label counts:")
 count_labels(df_train_y)
@@ -162,14 +168,14 @@ layers_info4 = [(20, leaky_relu), (20, leaky_relu), (20, leaky_relu), (20, leaky
                 (20, leaky_relu), (20, leaky_relu), (20, leaky_relu), (20, leaky_relu), (20, leaky_relu), (2, 'softmax')]
 layers_info5 = [(40, leaky_relu), (40, leaky_relu), (40, leaky_relu), (40, leaky_relu), (2, 'softmax')]
 
-#layers_info_list = {"leakyRelu_5_node_5_layer_lr_%f" % lr: layers_info1,"leakyRelu_10_node_5_layer_lr_%f" % lr:layers_info2,
-                    #"leakyRelu_20_node_5_layer_lr_%f" % lr: layers_info3, "leakyRelu_20_node_21_layer_lr_%f" % lr: layers_info4,
-                    #"leakyRelu_40_node_5_layer_lr_%f" % lr: layers_info5}
+layers_info_list = {"leakyRelu_5_node_5_layer_lr_%f" % lr: layers_info1,"leakyRelu_10_node_5_layer_lr_%f" % lr:layers_info2,
+                    "leakyRelu_20_node_5_layer_lr_%f" % lr: layers_info3, "leakyRelu_20_node_21_layer_lr_%f" % lr: layers_info4,
+                    "leakyRelu_40_node_5_layer_lr_%f" % lr: layers_info5}
 
 #layers_info_list = {"leakyRelu_5_node_2_layer_lr_%f_small" % lr: layers_info_small1,"leakyRelu_10_node_2_layer_lr_%f_small" % lr:layers_info_small2,
                     #"leakyRelu_20_node_2_layer_lr_%f_small" % lr: layers_info_small3, "leakyRelu_40_node_2_layer_lr_%f_small" % lr: layers_info_small4}
 
-layers_info_list = {"leakyRelu_1_node_2_layer_lr_%f" % lr: layers_info_one_layer_one_node, "no_hidden_lr_%f" % lr: layers_info_no_hidden}
+#layers_info_list = {"leakyRelu_1_node_2_layer_lr_%f" % lr: layers_info_one_layer_one_node, "no_hidden_lr_%f" % lr: layers_info_no_hidden}
 
 fig_loss, ax_loss = util.initialize_plot("Neural Network loss lr=%f" % lr, "# epochs", "loss")
 fig_f1, ax_f1 = util.initialize_plot("Neural Network F1 Score lr=%f" % lr, "# epochs", "F1 Score")
@@ -193,7 +199,7 @@ for i, key in enumerate(layers_info_list):
     # check if classes are relatively equal or not. If not, change metric
     #model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy', tf.keras.metrics.Precision(class_id=1), tf.keras.metrics.Recall(class_id=1)])
     model.compile(optimizer=Adam(learning_rate=0.01), loss='categorical_crossentropy',
-                  metrics=['accuracy', tf.keras.metrics.Precision(class_id=1), tf.keras.metrics.Recall(class_id=1)])
+                  metrics=['accuracy', tf.keras.metrics.Precision(class_id=1), tf.keras.metrics.Recall(class_id=1), tfa.metrics.F1Score(num_classes=2, average=None)])
 
     print("train_X BEFORE fitting:")
     print(train_X[:5])
@@ -229,6 +235,11 @@ for i, key in enumerate(layers_info_list):
     results = model.evaluate(x=test_X, y=test_y)
     print("results evaluated:")
     print(results)
+
+    # also evaluate auto data here
+    results_auto = model.evaluate(x=auto_test_X, y=auto_test_y)
+    print("auto results evaluated:")
+    print(results_auto)
 
     # plot loss and f1 score
     util.plot(make_epoch_list(len(losses)), losses, key, ax_loss)

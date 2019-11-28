@@ -130,9 +130,6 @@ def convert_to_bunch(data_df, labels_name):
                                         target_names=None)
     # print(bunch)
 
-    # todo: remove this. Only for testing
-    #bunch = load_iris()
-
     #bunch.data = np.float32(bunch.data)
 
     # todo: remove this. Will shuffle while doing train test split in main.py
@@ -210,7 +207,7 @@ def plot_max_depth_learning_curve(title, x_label, y_label, X, y, scoring_metric,
     test_mean_scores = []
     # for loop add max_iter range to hyper_params for plotting
     max_depth_list = np.logspace(0, 6, num=7, base=2.0)
-    #max_depth_list = [32, 64]
+    #max_depth_list = [2, 4]
 
     hyper_params_cpy = {"max_features":'auto', "oob_score": True, "n_estimators":100}#deepcopy(hyper_params)
 
@@ -293,24 +290,41 @@ if __name__ == "__main__":
     # load the data
     df_data, uniques = load_data("mortgage_data_small_50_50_2.csv")
 
-    print("df_data before hashing:")
-    print(df_data)
-    df_data = hash_encoder(df_data, cols_to_hash, no_new_cols_per)
-    print("df_data:")
-    print(df_data)
+    # remove hashing for state. State not helping
+
+    #print("df_data before hashing:")
+    #print(df_data)
+    #df_data = hash_encoder(df_data, cols_to_hash, no_new_cols_per)
+    #print("df_data:")
+    #print(df_data)
 
     df_auto_data, auto_uniques = load_data("auto_data.csv")
-    df_auto_data = hash_encoder(df_auto_data, cols_to_hash, no_new_cols_per)
+    #df_auto_data = hash_encoder(df_auto_data, cols_to_hash, no_new_cols_per)
 
     data_object, X_df_, y_df_ = convert_to_bunch(df_data, "delinquent")
 
     data_object_auto, X_auto_df_, y_auto_df_ = convert_to_bunch(df_auto_data, "delinquent")
+
+    # pop state off of orig X_auto_df_
+    print("X_auto_df:")
+    print(X_auto_df_.head(n=5))
+    auto_states_X = X_auto_df_.pop('state')
 
     print("X_df_ columns:")
     print(X_df_.columns)
 
     # separate data into train and test data
     X_train, X_test, y_train, y_test = train_test_split(X_df_, y_df_, test_size=0.2, shuffle=True, stratify=y_df_)
+
+    # save copy of X_test with state intact
+    # pop state of original X_test and X_train here
+    X_train.pop('state')
+
+    print("X_test before popping off state:")
+    print(X_test.head(n=5))
+    X_test_states = X_test.pop('state')
+    #X_test = np.delete(X_test, 1, 1)
+
     print("X_train:")
     print(X_train)
     print("y_train")
@@ -325,10 +339,10 @@ if __name__ == "__main__":
     #X_train = scale_data(sclr, X_train)
     #X_test = scale_data(sclr, X_test)
     #X_auto = scale_data(sclr, X_auto_df_)
-    nmlzr = fit_normalizer(X_train)
-    X_train = normalize_data(nmlzr, X_train)
-    X_test = normalize_data(nmlzr, X_test)
-    X_auto = normalize_data(nmlzr, X_auto_df_)
+    #nmlzr = fit_normalizer(X_train)
+    #X_train = normalize_data(nmlzr, X_train)
+    #X_test = normalize_data(nmlzr, X_test)
+    #X_auto = normalize_data(nmlzr, X_auto_df_)
 
     print("X_train after normalizing:")
     print(X_train)
@@ -357,7 +371,10 @@ if __name__ == "__main__":
 
     # get the f1 score on 0s (non-delinquent) and 1s (delinquent)
     # won't use accuracy since the auto loan data has imbalance in 0s and 1s
-    auto_test_predictions = rf_clf.predict(X_auto)
+    auto_test_predictions = rf_clf.predict(X_auto_df_)
+
+    # make predictions for mortgage data here also
+    mortgage_predictions = rf_clf.predict(X_test)
 
     print("np.unique(auto_test_predictions):")
     print(np.unique(auto_test_predictions))
@@ -374,3 +391,24 @@ if __name__ == "__main__":
     print(f1_score(y_auto_df_, auto_test_predictions, pos_label=0))
     print("auto test f1 score for 1s:")
     print(f1_score(y_auto_df_, auto_test_predictions, pos_label=1))
+
+    # attach states back onto original data for mortgage
+    X_test.reset_index(drop=True, inplace=True)
+    X_test_states.reset_index(drop=True, inplace=True)
+    print("mortgage_predictions before resetting index:")
+    print(mortgage_predictions)
+    mortgage_predictions_df = pd.DataFrame(data=mortgage_predictions)#.reset_index(drop=True, inplace=True)
+    print("mortgage_predictions after resetting index:")
+    print(mortgage_predictions_df)
+    X_mortgage_df_concat = pd.concat([X_test, X_test_states, mortgage_predictions_df], axis=1)
+
+    # attach states back onto original data for auto
+    X_auto_df_.reset_index(drop=True, inplace=True)
+    auto_states_X.reset_index(drop=True, inplace=True)
+    auto_test_predictions_df = pd.DataFrame(data=auto_test_predictions)#.reset_index(drop=True, inplace=True)
+    X_auto_df_concat = pd.concat([X_auto_df_, auto_states_X, auto_test_predictions_df], axis=1)
+
+    # for every element in copy of X_auto, write it and the corresponding prediction to csv file
+    # for every element in copy of X_test, write it and the corresponding prediction to csv file
+    X_mortgage_df_concat.to_csv(path_or_buf="mortgage_data_predictions.csv", sep=",", index=False)
+    X_auto_df_concat.to_csv(path_or_buf="auto_data_predictions.csv", sep=",", index=False)

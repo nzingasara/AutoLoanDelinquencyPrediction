@@ -295,7 +295,7 @@ if __name__ == "__main__":
     print(y_test)
 
     # hyperparams to change: criterion = 'entropy'
-    dt_clf = fit_decision_tree_classifier(X_train, y_train, random_state=0, **{"criterion": 'entropy', "max_depth": 1})
+    dt_clf = fit_decision_tree_classifier(X_train, y_train, random_state=0, **{"criterion": 'entropy', "max_depth": 7})
 
     save_decision_tree_to_file(dt_clf, data_object, "decisionTreeVisualization")
 

@@ -88,6 +88,8 @@ def get_largest_cluster(df):
 
 
 def load_data(file_name):
+    print("filename:")
+    print(file_name)
     type_dict = {'loan_amnt': np.float64,
                  'state': 'str',
                  'annual_inc': np.float64,
