@@ -3,11 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="effa37ed-c39f-4a3f-99e0-6572fbff0042" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecisionTree/decisionTreeMortgageClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/DecisionTree/decisionTreeMortgageClassifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecisionTree/decisionTreeVisualization" beforeDir="false" afterPath="$PROJECT_DIR$/DecisionTree/decisionTreeVisualization" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NeuralNetwork/neuralNetworkMortgageClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeuralNetwork/neuralNetworkMortgageClassifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeuralNetwork/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeuralNetwork/util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RandomForest/RandomForestMortgageClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/RandomForest/RandomForestMortgageClassifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScatterPlots/scatterPlot.py" beforeDir="false" afterPath="$PROJECT_DIR$/ScatterPlots/scatterPlot.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/RandomForest/RandomForestMortgageClassifier.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5565">
-              <caret line="391" column="23" selection-start-line="391" selection-start-column="21" selection-end-line="391" selection-end-column="23" />
+            <state relative-caret-position="77">
+              <caret line="325" column="37" lean-forward="true" selection-start-line="325" selection-start-column="37" selection-end-line="325" selection-end-column="37" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -29,13 +27,37 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NeuralNetwork/neuralNetworkMortgageClassifier.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="201" column="166" lean-forward="true" selection-start-line="201" selection-start-column="18" selection-end-line="201" selection-end-column="166" />
+            <state relative-caret-position="2235">
+              <caret line="158" column="27" selection-start-line="158" selection-start-column="27" selection-end-line="158" selection-end-column="27" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ScatterPlots/scatterPlot.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ScatterPlots/util.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -64,17 +86,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>scale_data(sclr, df_train_X)</find>
-      <find>get_time</find>
-      <find>mort</find>
-      <find>exit</find>
-      <find>nml</find>
-      <find>fit_scaler</find>
-      <find>fit_normalizer</find>
-      <find>lr</find>
-      <find>load_data</find>
-      <find>auto_file_name</find>
-      <find>auto_df</find>
       <find>37</find>
       <find>&quot;auto</find>
       <find>0.00</find>
@@ -90,10 +101,21 @@
       <find>df_test_X</find>
       <find>hash_encoder</find>
       <find>history</find>
-      <find>results</find>
       <find>model.compile</find>
       <find>plot</find>
       <find>f1</find>
+      <find>50</find>
+      <find>pred_y</find>
+      <find>f1_scores</find>
+      <find>epochs</find>
+      <find>.evaluate</find>
+      <find>results</find>
+      <find>0.0</find>
+      <find>green</find>
+      <find>scal</find>
+      <find>X_auto</find>
+      <find>X_mortgage_df_concat</find>
+      <find>plot_max_depth_learning_curve</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -106,14 +128,14 @@
         <option value="$PROJECT_DIR$/../../Homeworks/Homework4/hw4-skeleton/Q2/decision_tree.py" />
         <option value="$PROJECT_DIR$/ScatterPlots/scatterPlott.py" />
         <option value="$PROJECT_DIR$/ScatterPlots/util.py" />
-        <option value="$PROJECT_DIR$/ScatterPlots/scatterPlot.py" />
         <option value="$PROJECT_DIR$/DecisionTree/decisionTreeAutoClassifier.py" />
         <option value="$PROJECT_DIR$/DecisionTree/decisionTreeMortgageClassifier.py" />
         <option value="$PROJECT_DIR$/DecisionTree/histograms/histogram.py" />
-        <option value="$PROJECT_DIR$/RandomForest/RandomForestMortgageClassifier.py" />
         <option value="$PROJECT_DIR$/NeuralNetwork/util.py" />
         <option value="$PROJECT_DIR$/histograms/histogram.py" />
         <option value="$PROJECT_DIR$/NeuralNetwork/neuralNetworkMortgageClassifier.py" />
+        <option value="$PROJECT_DIR$/ScatterPlots/scatterPlot.py" />
+        <option value="$PROJECT_DIR$/RandomForest/RandomForestMortgageClassifier.py" />
       </list>
     </option>
   </component>
@@ -135,6 +157,11 @@
             <path>
               <item name="DelinquencyCode" type="b2602c69:ProjectViewProjectNode" />
               <item name="DelinquencyCode" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DelinquencyCode" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DelinquencyCode" type="462c0819:PsiDirectoryNode" />
+              <item name="ScatterPlots" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -175,7 +202,7 @@
     <frame x="29" y="23" width="1443" height="938" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24964838" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24964838" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -226,26 +253,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ScatterPlots/util.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="19" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ScatterPlots/scatterPlot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="79">
-          <caret line="47" selection-start-line="47" selection-end-line="47" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DecisionTree/decisionTreeMortgageClassifier.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="259">
@@ -286,10 +293,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RandomForest/RandomForestMortgageClassifier.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5565">
-          <caret line="391" column="23" selection-start-line="391" selection-start-column="21" selection-end-line="391" selection-end-column="23" />
+        <state relative-caret-position="77">
+          <caret line="325" column="37" lean-forward="true" selection-start-line="325" selection-start-column="37" selection-end-line="325" selection-end-column="37" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NeuralNetwork/neuralNetworkMortgageClassifier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2235">
+          <caret line="158" column="27" selection-start-line="158" selection-start-column="27" selection-end-line="158" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ScatterPlots/scatterPlot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ScatterPlots/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -300,16 +337,6 @@
           <caret line="87" column="22" selection-start-line="87" selection-start-column="22" selection-end-line="87" selection-end-column="22" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NeuralNetwork/neuralNetworkMortgageClassifier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="201" column="166" lean-forward="true" selection-start-line="201" selection-start-column="18" selection-end-line="201" selection-end-column="166" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>

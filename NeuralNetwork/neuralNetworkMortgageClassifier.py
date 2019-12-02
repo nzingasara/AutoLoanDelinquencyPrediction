@@ -146,7 +146,7 @@ print(pred_X.shape)
 print("pred y shape:")
 print(pred_y.shape)
 
-lr = 0.0001
+lr = 0.01
 ###############################
 input_shape = (11,)
 leaky_relu = LeakyReLU(0.1)
@@ -168,9 +168,9 @@ layers_info4 = [(20, leaky_relu), (20, leaky_relu), (20, leaky_relu), (20, leaky
                 (20, leaky_relu), (20, leaky_relu), (20, leaky_relu), (20, leaky_relu), (20, leaky_relu), (2, 'softmax')]
 layers_info5 = [(40, leaky_relu), (40, leaky_relu), (40, leaky_relu), (40, leaky_relu), (2, 'softmax')]
 
-layers_info_list = {"leakyRelu_5_node_5_layer_lr_%f" % lr: layers_info1,"leakyRelu_10_node_5_layer_lr_%f" % lr:layers_info2,
-                    "leakyRelu_20_node_5_layer_lr_%f" % lr: layers_info3, "leakyRelu_20_node_21_layer_lr_%f" % lr: layers_info4,
-                    "leakyRelu_40_node_5_layer_lr_%f" % lr: layers_info5}
+layers_info_list = {"leakyRelu_5_node_4_layer_lr_%f" % lr: layers_info1,"leakyRelu_10_node_4_layer_lr_%f" % lr:layers_info2,
+                    "leakyRelu_20_node_4_layer_lr_%f" % lr: layers_info3, "leakyRelu_20_node_20_layer_lr_%f" % lr: layers_info4,
+                    "leakyRelu_40_node_4_layer_lr_%f" % lr: layers_info5}
 
 #layers_info_list = {"leakyRelu_5_node_2_layer_lr_%f_small" % lr: layers_info_small1,"leakyRelu_10_node_2_layer_lr_%f_small" % lr:layers_info_small2,
                     #"leakyRelu_20_node_2_layer_lr_%f_small" % lr: layers_info_small3, "leakyRelu_40_node_2_layer_lr_%f_small" % lr: layers_info_small4}
@@ -178,7 +178,7 @@ layers_info_list = {"leakyRelu_5_node_5_layer_lr_%f" % lr: layers_info1,"leakyRe
 #layers_info_list = {"leakyRelu_1_node_2_layer_lr_%f" % lr: layers_info_one_layer_one_node, "no_hidden_lr_%f" % lr: layers_info_no_hidden}
 
 fig_loss, ax_loss = util.initialize_plot("Neural Network loss lr=%f" % lr, "# epochs", "loss")
-fig_f1, ax_f1 = util.initialize_plot("Neural Network F1 Score lr=%f" % lr, "# epochs", "F1 Score")
+#fig_f1, ax_f1 = util.initialize_plot("Neural Network F1 Score lr=%f" % lr, "# epochs", "F1 Score")
 fig_acc, ax_acc = util.initialize_plot("Neural Network Accuracy lr=%f" % lr, "# epochs", "Accuracy")
 
 for i, key in enumerate(layers_info_list):
@@ -199,7 +199,7 @@ for i, key in enumerate(layers_info_list):
     # check if classes are relatively equal or not. If not, change metric
     #model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy', tf.keras.metrics.Precision(class_id=1), tf.keras.metrics.Recall(class_id=1)])
     model.compile(optimizer=Adam(learning_rate=0.01), loss='categorical_crossentropy',
-                  metrics=['accuracy', tf.keras.metrics.Precision(class_id=1), tf.keras.metrics.Recall(class_id=1), tfa.metrics.F1Score(num_classes=2, average=None)])
+                  metrics=['accuracy', tf.keras.metrics.Precision(class_id=0), tf.keras.metrics.Recall(class_id=0), tf.keras.metrics.Precision(class_id=1), tf.keras.metrics.Recall(class_id=1), tfa.metrics.F1Score(num_classes=2, average=None)])
 
     print("train_X BEFORE fitting:")
     print(train_X[:5])
@@ -220,16 +220,16 @@ for i, key in enumerate(layers_info_list):
 
     precisions = None
     recalls = None
-    if i == 0:
-        precisions = history.history['precision']
-        recalls = history.history['recall']
-    else:
-        precisions = history.history['precision_%ld' % i]
-        recalls = history.history['recall_%ld' % i]
+    #if i == 0:
+        #precisions = history.history['precision']
+        #recalls = history.history['recall']
+    #else:
+        #precisions = history.history['precision_%ld' % i]
+        #recalls = history.history['recall_%ld' % i]
     losses = history.history['loss']
     accuracies = history.history['accuracy']
 
-    f1_scores = util.get_f1_scores(precisions, recalls)
+    #f1_scores = util.get_f1_scores(precisions, recalls)
 
     # put the test data in here
     results = model.evaluate(x=test_X, y=test_y)
@@ -243,7 +243,7 @@ for i, key in enumerate(layers_info_list):
 
     # plot loss and f1 score
     util.plot(make_epoch_list(len(losses)), losses, key, ax_loss)
-    util.plot(make_epoch_list(len(losses)), f1_scores, key, ax_f1)
+    #util.plot(make_epoch_list(len(losses)), f1_scores, key, ax_f1)
     util.plot(make_epoch_list(len(accuracies)), accuracies, key, ax_acc)
 
     predictions = model.predict(pred_X)
@@ -255,6 +255,15 @@ for i, key in enumerate(layers_info_list):
     pred_df = pd.DataFrame(d)
     pred_df.to_csv(path_or_buf="results_predictions_set_%s.csv" % key, sep=",", index=False)
 
+    predictions = model.predict(auto_test_X)
+    print("predictions auto:")
+    print(predictions)
+    print("pred_y auto:")
+    print(auto_test_y)
+    d = {'predictions': util.get_preds_from_probs(predictions), 'truth': util.get_preds_from_probs(auto_test_y)}
+    pred_df = pd.DataFrame(d)
+    pred_df.to_csv(path_or_buf="auto_results_predictions_set_%s.csv" % key, sep=",", index=False)
+
 util.save_clear_plt("nn_loss_lr_%f.png" % lr, ax_loss, fig_loss)
-util.save_clear_plt("nn_f1_lr_%f.png" % lr, ax_f1, fig_f1)
+#util.save_clear_plt("nn_f1_lr_%f.png" % lr, ax_f1, fig_f1)
 util.save_clear_plt("nn_acc_lr_%f.png" % lr, ax_acc, fig_acc)

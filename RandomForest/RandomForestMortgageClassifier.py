@@ -371,7 +371,7 @@ if __name__ == "__main__":
 
     # get the f1 score on 0s (non-delinquent) and 1s (delinquent)
     # won't use accuracy since the auto loan data has imbalance in 0s and 1s
-    auto_test_predictions = rf_clf.predict(X_auto_df_)
+    auto_test_predictions = rf_clf.predict(X_auto)
 
     # make predictions for mortgage data here also
     mortgage_predictions = rf_clf.predict(X_test)
