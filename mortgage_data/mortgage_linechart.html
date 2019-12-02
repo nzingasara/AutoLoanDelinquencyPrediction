@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="./lib/d3.v5.min.js"></script>
+<style>
+
+.line {
+    fill: none;
+    stroke: #ffab00;
+    stroke-width: 3;
+}
+  
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+/* Style the dots by assigning a fill and stroke */
+.dot {
+    fill: #ffab00;
+    stroke: #fff;
+}
+  
+.focus circle {
+  fill: none;
+  stroke: steelblue;
+}
+
+@media print {
+  .pagebreak {
+    clear: both;
+    page-break-after: always;
+  }
+}
+
+</style>
+<!-- Body tag is where we will append our SVG and SVG objects-->
+<body>
+</body>
+
+<script>
+
+Promise.all([
+    d3.dsv(",", "./auto_data.csv", function(data) {
+      return {
+        loan_amnt: data.loan_amnt,
+        state: data.state,
+        annual_inc: data.annual_inc,
+        int_rate: data.int_rate,
+        delinquent: data.delinquent,
+        disbursal_date: d3.timeParse("%Y-%m")(data.disbursal_date),
+        fico_low: data.fico_low,
+        fico_high: data.fico_high
+      };
+    }),
+    d3.dsv(",", "./sample_mortgage_data.csv", function(data) {
+      return {
+        loan_amnt: data.loan_amnt,
+        state: data.state,
+        annual_inc: data.annual_inc,
+        int_rate: data.int_rate,
+        delinquent: data.delinquent,
+        disbursal_date: d3.timeParse("%Y-%m")(data.disbursal_date),
+        credit_score: data.credit_score
+      };
+    })
+]).then(function(files) {
+  auto_process = process_data(bin_data(files[0]));
+  mortgage_process = process_data(bin_data(files[1]));
+    // files[0] will contain file1.csv
+    // files[1] will contain file2.csv
+  console.log(files);
+  plot_data(auto_process, mortgage_process);
+}).catch(function(err) {
+    console.log(err);
+})
+/*
+d3.dsv(",", "./auto_data.csv", function(data) {
+  return {
+    loan_amnt: data.loan_amnt,
+    state: data.state,
+    annual_inc: data.annual_inc,
+    int_rate: data.int_rate,
+    delinquent: data.delinquent,
+    disbursal_date: d3.timeParse("%Y-%m")(data.disbursal_date),
+    fico_low: data.fico_low,
+    fico_high: data.fico_high
+  };
+}).then(function(data) {
+  console.log(data);
+  plot_data(process_data(bin_data(data)), "auto_data");
+});
+
+d3.dsv(",", "./mortgage_data.csv", function(data) {
+  return {
+    loan_amnt: data.loan_amnt,
+    state: data.state,
+    annual_inc: data.annual_inc,
+    int_rate: data.int_rate,
+    delinquent: data.delinquent,
+    disbursal_date: d3.timeParse("%Y-%m")(data.disbursal_date),
+    credit_score: data.credit_score
+  };
+}).then(function(data) {
+  console.log(data);
+  plot_data(process_data(bin_data(data)), "mortgage_data");
+});
+*/
+function bin_data(dataset) {
+  var dataByDate = d3.nest()
+  .key(function(d) { return d.disbursal_date; })
+  .entries(dataset);
+
+  function sortByDateAscending(a, b) {
+      a = new Date(a.key);
+      b = new Date(b.key);
+      return a-b;
+  }
+
+  dataByDate = dataByDate.sort(sortByDateAscending);
+  return dataByDate;
+};
+
+function process_data(dataset) {
+  for (var i = dataset.length - 1; i >= 0; i--) {
+    subset = dataset[i].values;
+    total_delinquency = 0;
+    for (var j = subset.length - 1; j >= 0; j--) {
+      if (subset[j].delinquent == "1") {
+        total_delinquency++;
+      }
+    }
+    dataset[i].avg_delinquency = total_delinquency / subset.length;
+  }
+  return dataset;
+};
+
+function plot_data(dataset1, dataset2) {
+  // 2. Use the margin convention practice 
+  var padding = 30,
+    width = 1200,
+    height = 500;
+
+  var xScale = d3.scaleTime()
+    .domain([new Date("January 1, 1998 00:00:00"), new Date("December 31, 2020 00:00:00")])
+    .range([padding, width-padding]);
+
+  var yScale = d3.scaleLinear()
+    .domain([0, 0.14])
+    .range([height-padding, padding]);
+
+  // 7. d3's line generator
+  var auto_line = d3.line()
+    .x(function(d, i) { return xScale(new Date(d.key)); }) // set the x values for the line generator
+    .y(function(d) { return yScale(d.avg_delinquency); }); // set the y values for the line generator
+
+  var mortgage_line = d3.line()
+    .x(function(d, i) { return xScale(new Date(d.key)); })
+    .y(function(d) { return yScale(d.avg_delinquency); }); 
+
+  // 1. Add the SVG to the page and employ #2
+  var svg = d3.select("body").append("svg")
+    //.attr("id", id)
+    .attr("width", width + padding + padding)
+    .attr("height", height + padding + padding)
+    .append("g")
+    .attr("transform", "translate(" + padding + "," + padding + ")");
+
+  var xAxis = d3.axisBottom(xScale);
+  var yAxis = d3.axisLeft(yScale);
+
+  svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0,"+(height-padding)+")")
+    .call(xAxis);
+
+  svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate("+padding+",0)")
+    .call(yAxis);
+
+  var colors = {'auto_line': '#EEBB33', 'mortgage_line': '#33C5CC'}
+
+
+  // 9. Append the path, bind the data, and call the line generator 
+  svg.append("path")
+    .datum(dataset1) // 10. Binds data to the line 
+    .attr("class", "line") // Assign a class for styling 
+    .attr("d", auto_line) // 11. Calls the line generator
+    .style("stroke", colors.auto_line);
+
+  svg.append("path")
+    .datum(dataset2)
+    .attr("class", "line")
+    .attr("d", mortgage_line)
+    .style("stroke", colors.mortgage_line);
+
+  // text label for the x axis
+  svg.append("text")             
+    .attr("transform",
+          "translate(" + (width/2) + " ," + 
+                         (height) + ")")
+    .style("text-anchor", "middle")
+    .text("Time");
+
+  // text label for the y axis
+  svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - padding)
+    .attr("x",0 - (height / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Delinquency Rate");      
+
+  var legend = svg.append("g")
+    .attr("class","legend")
+    .attr("width", 100)
+    .attr("height", 100)
+    .attr("transform", "translate(" + (width-100) + ", 0)");
+
+  var legend_data = [
+    {loan_type: "Auto", color: colors.auto_line},
+    {loan_type: "Mortgage", color: colors.mortgage_line}
+  ];
+
+  legend.selectAll("rect")
+    .data(legend_data)
+    .enter()
+    .append("rect")
+    .attr("x", 10)
+    .attr("y", function(d, i) { return i*20; })
+    .attr("width", 20)
+    .attr("height", 15)
+    .style("fill", function(d) { return d.color; });
+
+  legend.selectAll('text')
+    .data(legend_data)
+    .enter()
+    .append("text")
+    .attr("x", 35)
+    .attr("y", function(d, i){ return i * 22 + 9;})
+    .text(function(d) {
+      return d.loan_type;
+    });
+
+  svg.append("text")
+    .attr("class", "title")
+    .attr("x", width/2)
+    .attr("y", 0)
+    .style("text-anchor", "middle")
+    .style("font-size", "25px")
+    .text("Loan Delinquency");
+
+  svg.append("div")
+    .attr("class", "pagebreak");
+};
+
+</script>
