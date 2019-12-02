@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>  
+<html>
+<head>
+<style>
+body {
+	font-family: sans-serif;
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+</head>
+<body>  
+
+<h2 align="center">Predict Your Mortgage Delinquency</h2>
+<table align="center">
+<tr><td>Annual income (USD): </td><td><input type="text" id="income" value="0"></td></tr>
+<tr><td>Credit score (0-800): </td><td><input type="text" id="credit" value="800"></td></tr>
+<tr><td>Interest rate (%): </td><td><input type="text" id="rate" value="0"></td></tr>
+<tr><td>Loan disbursal date (MM/DD/YYYY): </td><td><input type="text" id="date" value="12/03/2019"></td></tr>
+</table>
+<p align="center"><button type="button" id="button">Predict</button></p>
+<table align="center">
+<tr><td>Result:</td>
+<td><h3 id="result"></h3></td></tr></table>
+
+<script>
+document.getElementById("button").addEventListener("click", function(){ predict(); });
+
+function predict() {
+	var int_rate = parseInt(document.getElementById("rate").value);
+	var credit_score = parseInt(document.getElementById("credit").value);
+	var annual_inc = parseInt(document.getElementById("income").value);
+	var disbursal_timestamp = Date.parse(document.getElementById("date").value);
+	var delinq = false;
+
+	if (int_rate <= 5.23) {
+		if (credit_score <= 738.5) {
+			if (int_rate <= 4.519) {
+				if (credit_score <= 692.5) delinq = false;
+				else delinq = false;
+			}
+			else {
+				if (credit_score <= 683.5) delinq = true;
+				else delinq = false;
+			}
+		}
+		else {
+			if (int_rate <= 4.487) {
+				if (annual_inc <= 34354.0) delinq = false;
+				else delinq = false;
+			}
+			else {
+				if (annual_inc <= 42468.5) delinq = false;
+				else delinq = false;
+			}
+		}
+	}
+	else {
+		if (credit_score <= 721.5) {
+			if (disbursal_timestamp <= 1071593984.0) {
+				if (credit_score <= 666.5) delinq = true;
+				else delinq = false;
+			}
+			else {
+				if (int_rate <= 5.753) delinq = true;
+				else delinq = true;
+			}
+		}
+		else {
+			if (disbursal_timestamp <= 1055825984.0) {
+				if (annual_inc <= 21009.5) delinq = false;
+				else delinq = false;
+			}
+			else {
+				if (int_rate <= 5.845) delinq = false;
+				else delinq = true;
+			}
+		}
+	}
+	if (delinq) document.getElementById("result").innerText = "Delinquent!";
+	else document.getElementById("result").innerText = "Not delinquent!";
+	
+	return delinq;
+}
+
+
+
+</script>
+
+</body>
+</html>
