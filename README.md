@@ -64,3 +64,7 @@ Run auto_data.py. Running the file will generate auto_data.csv which filter for 
 1. Run auto_data.py
 2. Run auto_data_cleaning.ipynb, jupyter notebook, in the same directory as auto_data.py
 
+## Choropeth Folder
+
+#### Running choropleth.py
+Run choropleth.py with mortgage_data_predictions_new.csv file in the same directory
