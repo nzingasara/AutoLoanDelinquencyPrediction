@@ -56,11 +56,11 @@ The 'code' folder contains code needed to clean and produce a auto loan training
 ### Datasets Folder
 The 'datasets' folder contains the csv files  used by the code in the code folder.  
 
-### How to run auto_data.py 
+### Running auto_data.py 
 LoanStats3a_secure1.cvs should be saved in the same directory as auto_data.py. 
 Run auto_data.py. Running the file will generate auto_data.csv which filter for data only pertaining to auto loans. This csv file is used in auto_data_cleaning.ipynb file. 
 
-### How to run auto_data_cleaning.ipynb
+### Running auto_data_cleaning.ipynb
 1. Run auto_data.py
 2. Run auto_data_cleaning.ipynb, jupyter notebook, in the same directory as auto_data.py
 
