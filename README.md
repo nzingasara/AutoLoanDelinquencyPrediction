@@ -50,8 +50,10 @@ To change the hyperparameters used, go into randomForestClassifier.ipynb and upd
 
 ## Auto_Data Folder
 
-### Code folder
+### Code Folder
 The 'code' folder contains code needed to clean and produce a auto loan training dataset. 
+
+### Datasets Folder
 The 'datasets' folder contains the csv files  used by the code in the code folder.  
 
 ### How to run auto_data.py 
