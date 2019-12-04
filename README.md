@@ -66,5 +66,5 @@ Run auto_data.py. Running the file will generate auto_data.csv which filter for 
 
 ## Choropeth Folder
 
-#### Running choropleth.py
+### Running choropleth.py
 Run choropleth.py with mortgage_data_predictions_new.csv file in the same directory
