@@ -50,6 +50,10 @@ To change the hyperparameters used, go into randomForestClassifier.ipynb and upd
 
 ## Auto_Data Folder
 
+### Code folder
+The 'code' folder contains code needed to clean and produce a auto loan training dataset. 
+The 'datasets' folder contains the csv files  used by the code in the code folder.  
+
 ### How to run auto_data.py 
 LoanStats3a_secure1.cvs should be saved in the same directory as auto_data.py. 
 Run auto_data.py. Running the file will generate auto_data.csv which filter for data only pertaining to auto loans. This csv file is used in auto_data_cleaning.ipynb file. 
