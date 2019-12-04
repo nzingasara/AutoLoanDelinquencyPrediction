@@ -42,3 +42,9 @@ Note: When the instructions say "run the script", please run the first section t
 #### Further info on randomForestClassifier.ipynb
 The png file plots will be generated in "drive/My Drive/Colab Notebooks/CSE6242Project/". You may need to create the CSE6242Project folder before running this.
 To change the hyperparameters used, go into randomForestClassifier.ipynb and update the lists under the comment that says "global variables"
+
+## Mortgage Data information
+Mortgage data consists of two types of .csv files: "Origination Data" that describes the features of the loan when it was disbursed and "Monthly Perfomance Data" which lists month-to-month data including payments, loan principal, delinquency, etc.  The data is further separated into years and then into quarters.
+
+#### How to run mortgage data cleaner/compiler
+The python scripts used to clean and compile the collected mortgage data are named "20xx.py" with the year of interest as the name.  The scripts are nearly identical but pull from different years of the data and are separated as such to allow them to run simultaneously.  The location of the data needs to be checked to ensure that it matches what the script expects (line 72-73) and then the script can be executed.  The script outputs will be separated into years (corresponding to which script was run) and these files can be combined afterwards.
