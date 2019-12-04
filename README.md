@@ -1,5 +1,10 @@
 # CSE6242 Project ReadMe
 
+## Software Needed 
+1. Several files on this project requires the use of python 3.7 and/or jupyter notebook. Both come as packages to the Anaconda/Miniconda software which can be downloaded here: https://www.anaconda.com/distribution/ 
+2. Run python files on a terminal using the following command: python your_python_file.py
+3. Initialize/run jupyter notebooks on a terminal using the following command: jupyter notebook
+
 ## Forest Classifier information
 There are two files called "randomForestClassifer", one with extension .py and another with extension .ipynb. The former is a normal python file to be run locally on your laptop/computer. The latter is a jupyter notebook to be ran on Google Colaboratory.
 
@@ -42,3 +47,14 @@ Note: When the instructions say "run the script", please run the first section t
 #### Further info on randomForestClassifier.ipynb
 The png file plots will be generated in "drive/My Drive/Colab Notebooks/CSE6242Project/". You may need to create the CSE6242Project folder before running this.
 To change the hyperparameters used, go into randomForestClassifier.ipynb and update the lists under the comment that says "global variables"
+
+## Auto_Data Folder
+
+### How to run auto_data.py 
+LoanStats3a_secure1.cvs should be saved in the same directory as auto_data.py. 
+Run auto_data.py. Running the file will generate auto_data.csv which filter for data only pertaining to auto loans. This csv file is used in auto_data_cleaning.ipynb file. 
+
+### How to run auto_data_cleaning.ipynb
+1. Run auto_data.py
+2. Run auto_data_cleaning.ipynb, jupyter notebook, in the same directory as auto_data.py
+
